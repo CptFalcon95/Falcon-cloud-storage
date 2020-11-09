@@ -1,0 +1,14 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">
+        <img src="/images/logo_eagle_w.png" width="30" height="30" class="d-inline-block align-top" alt="">
+        Falcon Cloud <span class="text-muted">Storage</span>
+    </a>
+    <div class="ml-auto">
+        <% if (page == "login") { %>
+            <a href="/" class="btn btn-secondary">Register</a>
+        <% } %>
+        <% if (page == "index") { %>
+            <a href="/login" class="btn btn-success">Login</a>
+        <% } %>       
+    </div>
+</nav>

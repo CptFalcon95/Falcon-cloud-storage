@@ -30,7 +30,7 @@ export const styles = () => {
 }
 
 /* 
-Process image into ./public/images
+Process images into ./public/images
 */ 
 export const images = () => {
   return src('src/images/**/*.{jpg,jpeg,png,svg,gif}')
@@ -39,7 +39,7 @@ export const images = () => {
 }
 
 /* 
-Copy all non image, scss and js files from ./src into its own folder inside ./public
+Copy all non images, scss and js files from ./src into its own folder inside ./public
 */ 
 export const copy = () => {
   return src(['src/**/*','!src/{images,js,scss}','!src/{images,js,scss}/**/*'])

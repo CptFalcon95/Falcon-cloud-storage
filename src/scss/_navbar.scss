@@ -1,0 +1,6 @@
+nav.navbar {
+    min-height: 10vh;
+    @media (min-width: 480px) {
+        min-height: 7vh;
+    }
+}
