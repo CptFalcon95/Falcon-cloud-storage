@@ -1,6 +1,9 @@
 nav.navbar {
     min-height: 10vh;
-    @media (min-width: 480px) {
+    @media (min-width: $small-display) {
         min-height: 7vh;
+    }
+    .btn-green {
+        background-color: #10ac84;
     }
 }

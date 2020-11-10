@@ -54,7 +54,8 @@ into a temporary main.deps.js file.
 export const jsDeps = () => {
   const files = [
     'src/vendor/jquery.js',
-    'src/vendor/bootstrap.js'
+    'src/vendor/bootstrap.js',
+    'src/vendor/just-validate.min.js'
   ];
   return src(files)
     .pipe(concat('main.deps.js'))

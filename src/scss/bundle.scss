@@ -1,4 +1,18 @@
 @import 'vendor/bootstrap.scss';
+@import 'vendor/just-validate-tooltip.min.scss';
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400&display=swap');
+
+$small-display : "575px";
 @import '_navbar.scss';
-@import '_index.scss';
+@import 'register-login-form';
+
+@media(max-width: $small-display) {
+    .sm-h-100, .sm-h-100 > .row {
+        height: 100%;
+    }
+}
+
+.btn {
+    border-radius: 2px;
+}
+

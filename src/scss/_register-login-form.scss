@@ -11,7 +11,7 @@
 }
 
 section.testimonial {
-    h2, h4 {
+    h2, h3, h4, h5 {
         font-family: 'Roboto Condensed', sans-serif;
     }
     @media (min-width: 1920px) {
@@ -26,12 +26,37 @@ section.testimonial {
     img {
         width: 35%;
     }
-    @media (max-width: 575px) {
+    @media (max-width: $small-display) {
         align-items: start !important;
     }
+}
+
+.testimonial-row .bg-dark {
+    background: rgba(52, 58, 64, 0.8) !important;
+    display: flex;
+    align-items: center;
 }
 
 .login-form {
     display: flex;
     align-items: center;
+
+    .btn {
+        background-color: #10ac84;
+    }
+}
+
+.login-form, .login-form input,
+.register-form, .register-form input {
+    background-color: #e7e7e7;
+    border-color: #4f4f4f;
+}
+
+.register-form input, .login-form input {
+    &:focus {
+        background-color: #e7e7e7;
+        border-color: #4f4f4f;
+        outline: none;
+        box-shadow: 0 0 0 0.2rem rgba(51, 51, 51, 0.25);
+    }
 }
