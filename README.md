@@ -1,9 +1,15 @@
 # Falcon Cloud Storage
 
-## About / Synopsis
+## About
 
 * Falcon Cloud Storage is a simple cloud storage service build on Node.js using Express.js and MongoDB
+* User features: Photo gallery, favorited files and sharing via public url
+* Admin features: Create/update/delete users and change storage capacity
 * Project status: Prototype
+* Future features: Create and share folders, real-time chat, 2FA and a commentary box for files
+
+## Purpose
+This project is primarly just me playing around with nodeJS and to serve in my portfolio
 
 ## Table of contents
 
@@ -26,10 +32,9 @@
 
 ## Installation
 
-Sample:
-
-* From the Nuxeo Marketplace: install [the Sample Nuxeo Package](https://connect.nuxeo.com/nuxeo/site/marketplace/package/nuxeo-sample).
-* From the command line: `nuxeoctl mp-install nuxeo-sample`
+* From the NodeJS website: install [NodeJS](https://nodejs.org/en/download/).
+* Download MongoDB [here](https://nodejs.org/en/download/).
+* After installing NodeJS run `npm install` in the root folder.
 
 ## Usage
 
@@ -52,8 +57,7 @@ See [CORG/Compiling Nuxeo from sources](http://doc.nuxeo.com/x/xION)
 Sample: <https://github.com/nuxeo/nuxeo/blob/master/nuxeo-distribution/README.md>
 
 ### Limitations
-
-Sample: <https://github.com/nuxeo-archives/nuxeo-features/tree/master/nuxeo-elasticsearch>
+Supported file extentions: png, jpg, jpeg, docx, doc, avi, mp4, mp3, odt, ods, odp, ppt, pptx, zip, tar, xls, xlsx, 7z, wav, md
 
 ### Build
 
