@@ -21,6 +21,10 @@ This project is primarily just me playing around with nodeJS and it serves in my
 * To change the default port add a new line in the `.env` file.
 
     `PORT=XXXX`
+    
+## Users
+A user is a guest when not logged in. A logged in user is either a User or a Admin.
+There are no other levels of authority yet.
 
 ## Features
 - User features: 
@@ -30,7 +34,8 @@ This project is primarily just me playing around with nodeJS and it serves in my
 
 - Admin features: 
     * Create/update/delete users
-    * Change storage capacity
+    * Change storage capacity for each user
+    * Change user privileges ()
 
 ### Future features 
 * Create and share folders
