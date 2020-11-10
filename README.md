@@ -11,8 +11,8 @@ This project is primarily just me playing around with nodeJS and it serves in my
 ## Installation
 
 * From the NodeJS website: install [NodeJS](https://nodejs.org/en/download/).
-* After installing NodeJS run `npm install` in the root folder.
-* Create a `.env` file in the root. Within the file paste the following.
+* After installing NodeJS run `npm install` in the root directory.
+* Create a `.env` file in the root directory. Within the file paste the following, to allow a database to be connected
     
     `DATABASE_URL=YOUR_MONGODB_URL`
 
