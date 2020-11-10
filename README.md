@@ -23,7 +23,7 @@ This project is primarily just me playing around with nodeJS and it serves in my
     `PORT=XXXX`
     
 ## Users
-A user is a guest when not logged in. A logged in user is either a User or a Admin.
+A user is a `Guest` when not logged in. A logged in user is either a `User` or a `Admin`.
 There are no other levels of authority yet.
 
 ## Features
