@@ -39,7 +39,7 @@ There are no other levels of authority yet.
 - Admin features: 
     * Create/update/delete users
     * Change storage capacity for each user
-    * Change user privileges ()
+    * Change user privileges
 
 ### Future features 
 * Create and share folders
