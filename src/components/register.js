@@ -44,7 +44,7 @@ if (document.querySelector(".js-form-register")) {
    }
 
    const registerUser = (form, values) => {
-      console.log("klik");
+      console.log("registerUser");
       fetch(linkRegister, { 
          headers: {"Content-Type": "application/json; charset=utf-8"},
          method: 'POST',
@@ -52,7 +52,6 @@ if (document.querySelector(".js-form-register")) {
       })
       .then(res => res.json()) // parse response as JSON (can be res.text() for plain response)
       .then(response => {
-         console.log("RESPONSE");
          console.log(response);
       })
       .catch(err => {
@@ -60,9 +59,13 @@ if (document.querySelector(".js-form-register")) {
       });
    }
 
-   // Put inside click event
+   // This variable ensures that the form does not submit more than once.
+   // There is a bug with the validation package, this is a work around.
+   // This still needs to be fixed. Took a long time already :)
+   let submitted = false;
    document.querySelector("#register-btn").addEventListener('click', event => {
-      console.log('Biem!');
+      // This keeps firing multiple times after a 
+      // invalidated field was corrected en submitted again
       new window.JustValidate('.js-form-register', {
          rules: validationRulesRegister,
          messages: validationMessagesRegister,
@@ -70,13 +73,12 @@ if (document.querySelector(".js-form-register")) {
          tooltip: {
             fadeOutTime: 4000 // default value - 5000 
          },
-         submitHandler: (form, values) => { 
-            registerUser(form, values); 
-            console.log('Biem!');
-            console.log(values);
+         submitHandler: (form, values) => {
+            if(!submitted) registerUser(form, values);
+            submitted = true;
          },
-         invalidFormCallback: function (errors) {
-            console.log(errors);
+         invalidFormCallback: () => {
+            submitted = false;
          }
       });
    })

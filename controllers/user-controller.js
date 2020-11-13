@@ -20,7 +20,6 @@ function _checkEmailPromise(req, res) {
                     resolve("NOT OK");
                 }
             });
-            delete req.body;
         }
     });
 }
@@ -28,7 +27,7 @@ function _checkEmailPromise(req, res) {
 async function _checkEmail(req, res) {
     try {
         const promiseResponse = await _checkEmailPromise(req, res);
-        console.log("AFTER AWAT "+promiseResponse);
+        console.log("AFTER AWAIT");
         res.end(promiseResponse);
     } catch (err) {
         console.log(err);
@@ -38,13 +37,10 @@ async function _checkEmail(req, res) {
 function _registerUserPromise(req, res, userData) {
     return new Promise((resolve, reject) => {
         const user = new User(userData);
-        console.log("BODY");
-        console.log(req.body);
         console.log(`USERDATA: ${user}`);
         user
             .save()
             .then(result => resolve(result))
-            .then( delete req.body )
             .catch(err => reject(err));
     });
 }
@@ -58,6 +54,7 @@ function _login(req, res) {
 
 async function _register(req, res) {
     try {
+        console.log("BIEM IN REGISTER");
         const user = {
             _id: mongoose.Types.ObjectId(),
             name: req.body.name,
@@ -67,15 +64,15 @@ async function _register(req, res) {
             totalStorage: 1
         }
         const promiseResponse = await _registerUserPromise(req, res, user);
-        res.status(201).json({
+        res.status(201)
+        .json({
             success: true,
             createdUser: promiseResponse,
-        });
+        }).end();
+        
     } catch (err) {
         console.log(err);
-    }
-
-    res.end();
+    }    
 }
 
 module.exports = {
