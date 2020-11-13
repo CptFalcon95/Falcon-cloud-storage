@@ -6,23 +6,22 @@
 * Project status: Development
 
 ### Notice
-This project is primarily just me playing around with nodeJS and it serves in my portfolio
+This project is primarily just me playing around with nodeJS and to build my portfolio.
 
 ## Installation
 
-* From the NodeJS website: install [NodeJS](https://nodejs.org/en/download/).
-* After installing NodeJS run `npm install` in the root directory.
+* After cloning the repo run `npm install` in the root directory
 * Create a `.env` file in the root directory. Within the file paste the following, to allow a database to be connected
     
     `DATABASE_URL=YOUR_MONGODB_URL`
 
     Currently only tested with MongoDB Atlas clusters. Create the database [here](https://cloud.mongodb.com).
 
-* To change the default port add a new line in the `.env` file.
+* To change the default port add a new line in the `.env` file
 
     `PORT=XXXX`
 
-* If SSL is enabled in your environment, add the following to the `.env` file.
+* If SSL is enabled in your environment, add the following to the `.env` file
 
     `SSL_ENABLED=true`
     
@@ -48,7 +47,8 @@ There are no other levels of authority yet.
 * Commentary box for files
 
 ## Requirements
-For development purposes the npm packages `gulp-cli` and `nodemon` are required, and should install with the rest.
+* NodeJS [download here](https://nodejs.org/en/download/)
+* For development purposes the npm packages `gulp-cli` and `nodemon` are required, and should install with the rest
 
 ## Limitations
 Supported file extensions for upload will be: png, jpg, jpeg, docx, doc, avi, mp4, mp3, odt, ods, odp, ppt, pptx, zip, tar, xls, xlsx, 7z, wav, md.
