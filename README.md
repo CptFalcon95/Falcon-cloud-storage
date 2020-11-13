@@ -1,17 +1,17 @@
 # Falcon Cloud Storage
 
+### Notice
+This project is primarily just me playing around with nodeJS and to build my portfolio.
+
 ## About
 
 * Falcon Cloud Storage is a simple cloud storage service build on Node.js using Express.js and MongoDB.
 * Project status: Development
 
-### Notice
-This project is primarily just me playing around with nodeJS and to build my portfolio.
-
 ## Installation
 
 * After cloning the repo run `npm install` in the root directory
-* Create a `.env` file in the root directory. Within the file paste the following, to allow a database to be connected
+* Create a `.env` file in the root directory. Within the file paste the following to allow a database to be connected
     
     `DATABASE_URL=YOUR_MONGODB_URL`
 
