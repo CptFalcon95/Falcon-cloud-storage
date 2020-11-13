@@ -20,7 +20,11 @@ This project is primarily just me playing around with nodeJS and it serves in my
 
 * To change the default port add a new line in the `.env` file.
 
-    `PORT=XXXX`
+    `PORT=xxxx`
+
+* If SSL is enabled in your environment add this to the bottom of the `.env` file
+
+    `SSL_ENABLED=true`
 
 ## Features
 - User features: 

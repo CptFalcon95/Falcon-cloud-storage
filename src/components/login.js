@@ -6,10 +6,11 @@ if (document.querySelector(".js-form-login")) {
       email: {
          required: true,
          email: true
-   },
-   password: {
+      },
+      password: {
          required: true,
-   }};
+      }
+   };
 
    const validationMessagesLogin = {
       required: 'The field is required',
@@ -34,7 +35,7 @@ if (document.querySelector(".js-form-login")) {
       });
    }
 
-   const loginValidation = new window.JustValidate('.js-form-login', {
+   new window.JustValidate('.js-form-login', {
       rules: validationRulesLogin,
       messages: validationMessagesLogin,
       focusWrongField: true,

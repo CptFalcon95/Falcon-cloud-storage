@@ -4,12 +4,12 @@ if(process.env.NODE_ENV !== 'production') {
 }
 
 const express = require('express');
-const app = express();
-const expressLayouts = require('express-ejs-layouts');
+const session = require('express-session')
 const bodyParser = require('body-parser');
-
-const indexRouter = require('./routes/index');
-const userRouter = require('./routes/user');
+const cookieParser = require('cookie-parser');
+const indexRouter = require('./routes/index-route');
+const userRouter = require('./routes/user-route');
+const app = express();
 
 app.set("view engine", "ejs");
 app.set('views', __dirname + '/views');
@@ -17,10 +17,20 @@ app.use(express.static(__dirname + '/public'));
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
+app.use(cookieParser());
+
+// Configure sessions
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: process.env.SSL_ENABLED || false }
+}))
 
 const mongoose = require('mongoose');
 mongoose.connect(process.env.DATABASE_URL, { 
   useNewUrlParser: true,
+  useCreateIndex: true,
   useUnifiedTopology: true });
 
 const db = mongoose.connection;

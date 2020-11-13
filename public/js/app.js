@@ -44,7 +44,7 @@ if (document.querySelector(".js-form-login")) {
     });
   };
 
-  var loginValidation = new window.JustValidate('.js-form-login', {
+  new window.JustValidate('.js-form-login', {
     rules: validationRulesLogin,
     messages: validationMessagesLogin,
     focusWrongField: true,
@@ -67,53 +67,83 @@ if (document.querySelector(".js-form-login")) {
 if (document.querySelector(".js-form-register")) {
   var linkRegister = "/user/register";
   var validationRulesRegister = {
+    name: {
+      required: true
+    },
     email: {
       required: true,
-      email: true
+      email: true,
+      remote: {
+        url: '/user/check',
+        successAnswer: 'OK',
+        sendParam: 'email',
+        method: 'POST'
+      }
     },
     password: {
+      required: true,
+      strength: {
+        "default": true
+      }
+    },
+    password_repeat: {
+      required: true,
+      "function": function _function(name, value) {
+        var password = document.querySelector("input[name='password']").value;
+        return password === value;
+      }
+    },
+    tos_check: {
       required: true
     }
   };
   var validationMessagesRegister = {
     required: 'The field is required',
-    email: 'Please, type a valid email',
-    maxLength: 'The field must contain a maximum of :value characters',
-    minLength: 'The field must contain a minimum of :value characters',
-    password: 'Password is not valid',
-    remote: 'Email already exists'
+    email: {
+      remote: "Email already in use",
+      email: "Email not valid!"
+    },
+    password: 'Password is not valid'
   };
 
   var registerUser = function registerUser(form, values) {
+    console.log("klik");
     fetch(linkRegister, {
       headers: {
         "Content-Type": "application/json; charset=utf-8"
       },
-      method: 'POST'
+      method: 'POST',
+      body: JSON.stringify(values)
     }).then(function (res) {
       return res.json();
     }) // parse response as JSON (can be res.text() for plain response)
     .then(function (response) {
+      console.log("RESPONSE");
       console.log(response);
     })["catch"](function (err) {
-      alert("sorry, there are no results for your search");
+      console.log("sorry, there are no results for your search");
     });
-  };
+  }; // Put inside click event
 
-  var registerValidation = new window.JustValidate('.js-form-register', {
-    rules: validationRulesRegister,
-    messages: validationMessagesRegister,
-    focusWrongField: true,
-    colorWrong: '#ED4C67',
-    tooltip: {
-      fadeOutTime: 4000 // default value - 5000 
 
-    },
-    submitHandler: function submitHandler(form, values) {
-      registerUser(form, values);
-    },
-    invalidFormCallback: function invalidFormCallback(errors) {
-      console.log(errors);
-    }
+  document.querySelector("#register-btn").addEventListener('click', function (event) {
+    console.log('Biem!');
+    new window.JustValidate('.js-form-register', {
+      rules: validationRulesRegister,
+      messages: validationMessagesRegister,
+      colorWrong: '#ED4C67',
+      tooltip: {
+        fadeOutTime: 4000 // default value - 5000 
+
+      },
+      submitHandler: function submitHandler(form, values) {
+        registerUser(form, values);
+        console.log('Biem!');
+        console.log(values);
+      },
+      invalidFormCallback: function invalidFormCallback(errors) {
+        console.log(errors);
+      }
+    });
   });
 } //Endif

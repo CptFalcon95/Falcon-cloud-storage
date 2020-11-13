@@ -7,9 +7,9 @@
 <section class="testimonial" id="testimonial">
     <div class="container">
         <div class="row align-items-center testimonial-row">
-            <div class="col-xs-12 col-md-12 col-lg-6 offset-lg-6 sm-h-100">
+            <div class="col-12 col-md-12 col-lg-6 offset-lg-6 sm-h-100">
                 <div class="row">      
-                    <div class="col-md-6 py-3 bg-dark text-white text-center">
+                    <div class="col-12 col-md-6 py-3 bg-dark text-white text-center">
                         <div class="card-body">
                             <!-- <img src="http://www.ansonika.com/mavia/img/registration_bg.svg" style="width:30%"> -->
                             <img src="/images/register.png">
@@ -17,33 +17,38 @@
                             <p>Tation argumentum et usu, dicit viderer evertitur te has. Eu dictas concludaturque usu, facete detracto patrioque an per, lucilius pertinacia eu vel.</p>
                         </div>
                     </div>
-                    <div class="col-md-6 pt-4 pb-3 border register-form">
+                    <div class="col-12 col-md-6 pt-4 pb-3 border register-form">
                         <h5 class="pb-2 text-uppercase">Please fill in your credentials</h5>
-                        <form id="register-form" class="js-form-register" action="#">
+                        <form class="js-form-register" action="#">
                             <div class="form-row">
                                 <div class="form-group col-md-12">
-                                    <input name="name" data-validate-field="name" placeholder="Name" class="form-control" type="text">
+                                    <div class="just-validate-tooltip-container">
+                                        <input name="name" data-validate-field="name" placeholder="Name" class="form-control" type="text">
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <input type="email" data-validate-field="email" name="email" class="form-control" placeholder="Email">
+                                <div class="form-group col-12">
+                                    <div class="just-validate-tooltip-container">
+                                        <input type="email" data-validate-field="email" name="email" class="form-control" placeholder="Email">
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <input name="password" data-validate-field="password" placeholder="Password" class="form-control" type="password">
+                                <div class="form-group col-6">
+                                    <div class="just-validate-tooltip-container">
+                                        <input name="password" data-validate-field="password" placeholder="Password" class="form-control" type="password">
+                                    </div>
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <input type="password" data-validate-field="password_repeat" name="password_repeat" class="form-control" placeholder="Repeat password">
-                                </div>
-                                <div class="text-muted">
-                                    <small>Minimum eight characters, at least one letter, one number and one special character</small>
+                                <div class="form-group col-6">
+                                    <div class="just-validate-tooltip-container">
+                                        <input type="password" data-validate-field="password_repeat" name="password_repeat" class="form-control" placeholder="Repeat password">
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <div class="form-group">
+                                    <div class="col-12">
                                         <div class="form-check">
                                             <input class="form-check-input" data-validate-field="tos_check" name="tos_check" type="checkbox" value="" id="invalidCheck2" required>
                                             <label class="form-check-label" for="invalidCheck2">
@@ -54,7 +59,9 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <button type="submit" class="btn btn-secondary py-2 w-100">Join Now</button>
+                                <div class="form-group col-12">
+                                    <button type="submit" id="register-btn" class="btn btn-secondary py-2 w-100">Join Now</button>
+                                </div>
                             </div>
                         </form>
                     </div>
