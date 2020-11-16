@@ -2,8 +2,9 @@
 @import "../vendor/sbadmin/variables";
 @import '../vendor/bootstrap.scss';
 @import '../vendor/sbadmin/sb-admin-2.scss';
-
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400&display=swap');
 @import '../vendor/just-validate-tooltip.min.scss';
+
+@import 'topbar';
 
 $small-display : "575px";

@@ -105,7 +105,8 @@ if (document.querySelector(".js-form-register")) {
     tos_check: {
       required: true
     }
-  };
+  }; // FIXME Needs better wording
+
   var validationMessagesRegister = {
     required: 'The field is required',
     email: {

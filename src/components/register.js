@@ -35,6 +35,7 @@ if (document.querySelector(".js-form-register")) {
       }
    };
 
+   // FIXME Needs better wording
    const validationMessagesRegister = {
       required: 'The field is required',
       email: {
