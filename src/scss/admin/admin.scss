@@ -1,3 +1,9 @@
-h1 {
-    color: red;
-}
+// Import Custom SB Admin 2 Variables (Overrides Default Bootstrap Variables)
+@import "../vendor/sbadmin/variables";
+@import '../vendor/bootstrap.scss';
+@import '../vendor/sbadmin/sb-admin-2.scss';
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400&display=swap');
+@import '../vendor/just-validate-tooltip.min.scss';
+
+$small-display : "575px";

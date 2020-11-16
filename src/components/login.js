@@ -1,3 +1,5 @@
+// TODO Build login 
+// Check if the page contains the login form
 if (document.querySelector(".js-form-login")) {
    
    const linkLogin = "/user/login";

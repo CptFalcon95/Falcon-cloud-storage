@@ -1,3 +1,4 @@
+// Check if the page contains the register form
 if (document.querySelector(".js-form-register")) {
 
    const linkRegister = "/user/register";
@@ -52,16 +53,18 @@ if (document.querySelector(".js-form-register")) {
       })
       .then(res => res.json()) // parse response as JSON (can be res.text() for plain response)
       .then(response => {
+         // TODO User needs to be notified on the frontend.
          console.log(response);
       })
       .catch(err => {
-         console.log("sorry, there are no results for your search");
+         // TODO User needs to be notified on the frontend.
+         console.log("sorry, there went something wrong");
       });
    }
 
    // This variable ensures that the form does not submit more than once.
    // There is a bug with the validation package, this is a work around.
-   // This still needs to be fixed. Took a long time already :)
+   // FIXME Submit form submits more than once.
    let submitted = false;
    document.querySelector("#register-btn").addEventListener('click', event => {
       // This keeps firing multiple times after a 

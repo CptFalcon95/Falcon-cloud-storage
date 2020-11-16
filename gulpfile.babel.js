@@ -42,7 +42,7 @@ export const images = () => {
 Copy all non images, scss and js files from ./src into its own folder inside ./public
 */ 
 export const copy = () => {
-  return src(['src/**/*','!src/{images,js,scss}','!src/{images,js,scss}/**/*'])
+  return src(['src/**/*','!src/{images,js,scss,components,vendor}','!src/{images,js,scss,components,vendor}/**/*'])
     .pipe(dest('public'));
 }
 
@@ -55,7 +55,8 @@ export const jsDeps = () => {
   const files = [
     'src/vendor/jquery.js',
     'src/vendor/bootstrap.js',
-    'src/vendor/just-validate.min.js'
+    'src/vendor/just-validate.min.js',
+    'src/vendor/sb-admin-2.min.js'
   ];
   return src(files)
     .pipe(concat('main.deps.js'))

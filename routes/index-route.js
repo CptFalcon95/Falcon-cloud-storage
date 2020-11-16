@@ -1,18 +1,9 @@
 const express = require('express');
+const userController = require('../controllers/user-controller');
 const router = express.Router();
+const indexController = require('../controllers/user-controller');
 
-const bodyParser = require('body-parser');
-
-router.get('/', (req, res) => {
-    res.render('login', {
-        page: 'login'
-    });
-});
-
-router.get('/register', (req, res) => {
-    res.render('register', {
-        page: 'register'
-    });
-});
+router.get('/', userController.index);
+router.get('/register', userController.registerForm);
 
 module.exports = router;

@@ -3,7 +3,7 @@
 @import 'vendor/just-validate-tooltip.min.scss';
 
 $small-display : "575px";
-@import '_navbar.scss';
+@import 'navbar';
 @import 'register-login-form';
 
 @media(max-width: $small-display) {
