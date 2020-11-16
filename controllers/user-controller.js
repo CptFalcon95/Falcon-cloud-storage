@@ -1,12 +1,21 @@
 const express = require('express');
+const bcrypt = require('bcrypt');
 const User = require('../models/user-model');
 const mongoose = require('mongoose');
 
-function _index(req, res) {
+module.exports = {
+    index,
+    checkEmail,
+    login,
+    register,
+    registerForm
+}
+
+function index(req, res) {
     // loggedIn is set hard, later replaced by authorization
     // TODO Replace with authorization
     // let currentUser = _getCurrentUser();
-    let loggedIn = true;
+    let loggedIn = false;
     if(!loggedIn)
      {
         res.render('login', {
@@ -24,17 +33,17 @@ function _index(req, res) {
      }
 }
 
-function _getCurrentUser(req,res) {
+function getCurrentUser(req,res) {
 
 }
 
-function _registerForm(req,res) {
+function registerForm(req,res) {
     res.render('register', {
         page: 'register'
     });
 }
 
-function _checkEmailPromise(req, res) {
+function checkEmailPromise(req, res) {
     return new Promise((resolve, reject) => {
         const reqEmail = req.body.email;
         if (reqEmail) {
@@ -50,16 +59,16 @@ function _checkEmailPromise(req, res) {
     });
 }
 
-async function _checkEmail(req, res) {
+async function checkEmail(req, res) {
     try {
-        const promiseResponse = await _checkEmailPromise(req, res);
+        const promiseResponse = await checkEmailPromise(req, res);
         res.end(promiseResponse);
     } catch (err) {
         console.log(err);
     }
 }
 
-function _registerUserPromise(req, res, userData) {
+function registerUserPromise(req, res, userData) {
     return new Promise((resolve, reject) => {
         const user = new User(userData);
         user
@@ -69,24 +78,34 @@ function _registerUserPromise(req, res, userData) {
     });
 }
 
-function _login(req, res) {
-    const response =  {
-        title: 'test'
-    };
-    res.end(JSON.stringify(response));
+function login(req, res) {
+    try {       
+        const reqEmail = req.body.email;
+        if (reqEmail) {
+            User.findOne({email: reqEmail}, async (err, user) => {
+                if (err) reject(err); 
+                const match = await bcrypt.compare(req.body.password, user.password);
+                if (match) {
+                    console.log("macth");
+                }      
+            });
+        }
+    } catch(err) {
+        console.log(err);
+    }
 }
 
-async function _register(req, res) {
+async function register(req, res) {
     try {
         const user = {
             _id: mongoose.Types.ObjectId(),
             name: req.body.name,
-            password: req.body.password,
+            password: bcrypt.hashSync(req.body.password, 10),
             email: req.body.email,
             admin: 0,
             totalStorage: 1
         }
-        const promiseResponse = await _registerUserPromise(req, res, user);
+        const promiseResponse = await registerUserPromise(req, res, user);
         res.status(201)
         .json({
             success: true,
@@ -96,12 +115,4 @@ async function _register(req, res) {
     } catch (err) {
         console.log(err);
     }    
-}
-
-module.exports = {
-    index: _index,
-    checkEmail: _checkEmail,
-    login: _login,
-    register: _register,
-    registerForm: _registerForm
 }

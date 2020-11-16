@@ -27,6 +27,7 @@ if (document.querySelector(".js-form-login")) {
       fetch(linkLogin, { 
          headers: {"Content-Type": "application/json; charset=utf-8"},
          method: 'POST',
+         body: JSON.stringify(values)
       })
       .then(res => res.json()) // parse response as JSON (can be res.text() for plain response)
       .then(response => {

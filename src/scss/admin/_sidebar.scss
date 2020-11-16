@@ -1,0 +1,11 @@
+.sidebar {
+    background-color: #343a40;
+    &-brand {
+        &-icon {
+            img {
+                width: 35px;
+                height: 35px;
+            }
+        }
+    }
+}
