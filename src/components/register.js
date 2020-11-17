@@ -4,8 +4,15 @@ if (document.querySelector(".js-form-register")) {
    const linkRegister = "/user/register";
 
    const validationRulesRegister = {
+      // TODO validate name, as a standard username
       name: {
          required: true,
+         // remote: {
+         //    url: '/user/check',
+         //    successAnswer: 'OK',
+         //    sendParam: 'name',
+         //    method: 'POST'
+         // }
       },
       email: {
          required: true,

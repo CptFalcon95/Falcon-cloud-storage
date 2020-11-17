@@ -25,16 +25,18 @@ if (document.querySelector(".js-form-login")) {
       email: true
     },
     password: {
-      required: true
+      required: true,
+      remote: {
+        url: '/user/login',
+        successAnswer: 'OK',
+        sendParam: 'passwd',
+        method: 'POST'
+      }
     }
   };
   var validationMessagesLogin = {
-    required: 'The field is required',
-    email: 'Please, type a valid email',
-    maxLength: 'The field must contain a maximum of :value characters',
-    minLength: 'The field must contain a minimum of :value characters',
-    password: 'Password is not valid',
-    remote: 'Email already exists'
+    email: 'Email is required',
+    password: 'Password is required'
   };
 
   var loginUser = function loginUser(form, values) {
@@ -52,23 +54,31 @@ if (document.querySelector(".js-form-login")) {
     })["catch"](function (err) {
       alert("sorry, there are no results for your search");
     });
-  };
+  }; // This variable ensures that the form does not submit more than once.
+  // There is a bug with the validation package, this is a work around.
+  // I'll fix this later.
+  // FIXME Submit form submits more than once.
 
-  new window.JustValidate('.js-form-login', {
-    rules: validationRulesLogin,
-    messages: validationMessagesLogin,
-    focusWrongField: true,
-    colorWrong: '#ED4C67',
-    tooltip: {
-      fadeOutTime: 4000 // default value - 5000 
 
-    },
-    submitHandler: function submitHandler(form, values) {
-      loginUser(form, values);
-    },
-    invalidFormCallback: function invalidFormCallback(errors) {
-      console.log(errors);
-    }
+  var submitted = false;
+  document.querySelector("#login-btn").addEventListener('click', function (event) {
+    new window.JustValidate('.js-form-login', {
+      rules: validationRulesLogin,
+      messages: validationMessagesLogin,
+      focusWrongField: true,
+      colorWrong: '#ED4C67',
+      tooltip: {
+        fadeOutTime: 4000 // default value - 5000 
+
+      },
+      submitHandler: function submitHandler(form, values) {
+        if (!submitted) loginUser(form, values);
+        submitted = true;
+      },
+      invalidFormCallback: function invalidFormCallback(errors) {
+        console.log(errors);
+      }
+    });
   });
 }
 
@@ -77,8 +87,15 @@ if (document.querySelector(".js-form-login")) {
 if (document.querySelector(".js-form-register")) {
   var linkRegister = "/user/register";
   var validationRulesRegister = {
+    // TODO validate name, as a standard username
     name: {
-      required: true
+      required: true // remote: {
+      //    url: '/user/check',
+      //    successAnswer: 'OK',
+      //    sendParam: 'name',
+      //    method: 'POST'
+      // }
+
     },
     email: {
       required: true,
@@ -140,7 +157,7 @@ if (document.querySelector(".js-form-register")) {
   // FIXME Submit form submits more than once.
 
 
-  var submitted = false;
+  var _submitted = false;
   document.querySelector("#register-btn").addEventListener('click', function (event) {
     // This keeps firing multiple times after a 
     // invalidated field was corrected en submitted again
@@ -153,11 +170,11 @@ if (document.querySelector(".js-form-register")) {
 
       },
       submitHandler: function submitHandler(form, values) {
-        if (!submitted) registerUser(form, values);
-        submitted = true;
+        if (!_submitted) registerUser(form, values);
+        _submitted = true;
       },
       invalidFormCallback: function invalidFormCallback() {
-        submitted = false;
+        _submitted = false;
       }
     });
   });

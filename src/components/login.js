@@ -11,16 +11,18 @@ if (document.querySelector(".js-form-login")) {
       },
       password: {
          required: true,
+         remote: {
+            url: '/user/login',
+            successAnswer: 'OK',
+            sendParam: 'passwd',
+            method: 'POST'
+         }
       }
    };
 
    const validationMessagesLogin = {
-      required: 'The field is required',
-      email: 'Please, type a valid email',
-      maxLength: 'The field must contain a maximum of :value characters',
-      minLength: 'The field must contain a minimum of :value characters',
-      password: 'Password is not valid',
-      remote: 'Email already exists'
+      email: 'Email is required',
+      password: 'Password is required'
    }
 
    const loginUser = (form, values) => {
@@ -37,19 +39,27 @@ if (document.querySelector(".js-form-login")) {
          alert("sorry, there are no results for your search");
       });
    }
-
-   new window.JustValidate('.js-form-login', {
-      rules: validationRulesLogin,
-      messages: validationMessagesLogin,
-      focusWrongField: true,
-      colorWrong: '#ED4C67',
-      tooltip: {
-         fadeOutTime: 4000 // default value - 5000 
-      },
-      submitHandler: (form, values) => { loginUser(form, values); },
-      invalidFormCallback: function (errors) {
-      console.log(errors);
-      }
+   // This variable ensures that the form does not submit more than once.
+   // There is a bug with the validation package, this is a work around.
+   // I'll fix this later.
+   // FIXME Submit form submits more than once.
+   let submitted = false;
+   document.querySelector("#login-btn").addEventListener('click', event => {
+      new window.JustValidate('.js-form-login', {
+         rules: validationRulesLogin,
+         messages: validationMessagesLogin,
+         focusWrongField: true,
+         colorWrong: '#ED4C67',
+         tooltip: {
+            fadeOutTime: 4000 // default value - 5000 
+         },
+         submitHandler: (form, values) => { 
+            if(!submitted) loginUser(form, values); 
+            submitted = true;
+         },
+         invalidFormCallback: function (errors) {
+            console.log(errors);
+         }
+      });
    });
-
 };

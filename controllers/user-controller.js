@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 
 module.exports = {
     index,
-    checkEmail,
     login,
     register,
     registerForm
@@ -43,34 +42,10 @@ function registerForm(req,res) {
     });
 }
 
-function checkEmailPromise(req, res) {
-    return new Promise((resolve, reject) => {
-        const reqEmail = req.body.email;
-        if (reqEmail) {
-            User.find({email: reqEmail}, (err, found) => {
-                if (err) reject(err); 
-                if (found.length == 0) {
-                    resolve("OK");
-                } else {
-                    resolve("NOT OK");
-                }
-            });
-        }
-    });
-}
-
-async function checkEmail(req, res) {
-    try {
-        const promiseResponse = await checkEmailPromise(req, res);
-        res.end(promiseResponse);
-    } catch (err) {
-        console.log(err);
-    }
-}
-
 function registerUserPromise(req, res, userData) {
     return new Promise((resolve, reject) => {
         const user = new User(userData);
+        console.log(user);
         user
             .save()
             .then(result => resolve(result))
@@ -81,14 +56,18 @@ function registerUserPromise(req, res, userData) {
 function login(req, res) {
     try {       
         const reqEmail = req.body.email;
+        console.log(reqEmail);
         if (reqEmail) {
             User.findOne({email: reqEmail}, async (err, user) => {
-                if (err) reject(err); 
-                const match = await bcrypt.compare(req.body.password, user.password);
+                if (err) console.log(err);
+                const match = await bcrypt.compare(req.body.password, user.password || "");
                 if (match) {
-                    console.log("macth");
-                }      
-            });
+                    console.log("Match");
+                }
+                else {
+                    console.log("No match");
+                }
+            }); 
         }
     } catch(err) {
         console.log(err);
