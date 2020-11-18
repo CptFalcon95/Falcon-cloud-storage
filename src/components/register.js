@@ -7,12 +7,12 @@ if (document.querySelector(".js-form-register")) {
       // TODO validate name, as a standard username
       name: {
          required: true,
-         // remote: {
-         //    url: '/user/check',
-         //    successAnswer: 'OK',
-         //    sendParam: 'name',
-         //    method: 'POST'
-         // }
+         remote: {
+            url: '/user/check',
+            successAnswer: 'OK',
+            sendParam: 'name',
+            method: 'POST'
+         }
       },
       email: {
          required: true,
@@ -50,6 +50,9 @@ if (document.querySelector(".js-form-register")) {
          email: "Email not valid!"
       },
       password: 'Password is not valid',
+      name: {
+         remote: "Name contains invalid characters",
+      }
    }
 
    const registerUser = (form, values) => {

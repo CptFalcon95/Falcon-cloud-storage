@@ -7,25 +7,34 @@ if (document.querySelector(".js-form-login")) {
    const validationRulesLogin = {
       email: {
          required: true,
-         email: true
+         remote: {
+            url: '/user/check',
+            successAnswer: 'NOT OK',
+            sendParam: 'email',
+            method: 'POST'
+         }
       },
       password: {
          required: true,
-         remote: {
-            url: '/user/login',
-            successAnswer: 'OK',
-            sendParam: 'passwd',
-            method: 'POST'
-         }
       }
    };
 
    const validationMessagesLogin = {
-      email: 'Email is required',
+      email: {
+         email: 'Email is required',
+         remote: 'Email or password invalid',
+      },
       password: 'Password is required'
    }
 
+   // This variable ensures that the form does not submit more than once.
+   // There is a bug with the validation package, this is a work around.
+   // I'll fix this later.
+   // FIXME Submit form submits more than once.
+   let submitted = false;
+   
    const loginUser = (form, values) => {
+      console.log("loginUser");
       fetch(linkLogin, { 
          headers: {"Content-Type": "application/json; charset=utf-8"},
          method: 'POST',
@@ -33,18 +42,21 @@ if (document.querySelector(".js-form-login")) {
       })
       .then(res => res.json()) // parse response as JSON (can be res.text() for plain response)
       .then(response => {
-         console.log(response);
+         // TODO Notify user of login success/failure
+         if (response == false) {
+            submitted = false;
+         } else {
+            // Refresh page
+            console.log("Logged IN");
+         }
       })
       .catch(err => {
          alert("sorry, there are no results for your search");
       });
    }
-   // This variable ensures that the form does not submit more than once.
-   // There is a bug with the validation package, this is a work around.
-   // I'll fix this later.
-   // FIXME Submit form submits more than once.
-   let submitted = false;
+   
    document.querySelector("#login-btn").addEventListener('click', event => {
+      console.log("klik");
       new window.JustValidate('.js-form-login', {
          rules: validationRulesLogin,
          messages: validationMessagesLogin,
@@ -58,7 +70,7 @@ if (document.querySelector(".js-form-login")) {
             submitted = true;
          },
          invalidFormCallback: function (errors) {
-            console.log(errors);
+            submitted = false;
          }
       });
    });

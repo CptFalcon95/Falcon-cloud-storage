@@ -22,24 +22,32 @@ if (document.querySelector(".js-form-login")) {
   var validationRulesLogin = {
     email: {
       required: true,
-      email: true
-    },
-    password: {
-      required: true,
       remote: {
-        url: '/user/login',
-        successAnswer: 'OK',
-        sendParam: 'passwd',
+        url: '/user/check',
+        successAnswer: 'NOT OK',
+        sendParam: 'email',
         method: 'POST'
       }
+    },
+    password: {
+      required: true
     }
   };
   var validationMessagesLogin = {
-    email: 'Email is required',
+    email: {
+      email: 'Email is required',
+      remote: 'Email or password invalid'
+    },
     password: 'Password is required'
-  };
+  }; // This variable ensures that the form does not submit more than once.
+  // There is a bug with the validation package, this is a work around.
+  // I'll fix this later.
+  // FIXME Submit form submits more than once.
+
+  var submitted = false;
 
   var loginUser = function loginUser(form, values) {
+    console.log("loginUser");
     fetch(linkLogin, {
       headers: {
         "Content-Type": "application/json; charset=utf-8"
@@ -50,18 +58,20 @@ if (document.querySelector(".js-form-login")) {
       return res.json();
     }) // parse response as JSON (can be res.text() for plain response)
     .then(function (response) {
-      console.log(response);
+      // TODO Notify user of login success/failure
+      if (response == false) {
+        submitted = false;
+      } else {
+        // Refresh page
+        console.log("Logged IN");
+      }
     })["catch"](function (err) {
       alert("sorry, there are no results for your search");
     });
-  }; // This variable ensures that the form does not submit more than once.
-  // There is a bug with the validation package, this is a work around.
-  // I'll fix this later.
-  // FIXME Submit form submits more than once.
+  };
 
-
-  var submitted = false;
   document.querySelector("#login-btn").addEventListener('click', function (event) {
+    console.log("klik");
     new window.JustValidate('.js-form-login', {
       rules: validationRulesLogin,
       messages: validationMessagesLogin,
@@ -76,7 +86,7 @@ if (document.querySelector(".js-form-login")) {
         submitted = true;
       },
       invalidFormCallback: function invalidFormCallback(errors) {
-        console.log(errors);
+        submitted = false;
       }
     });
   });
@@ -89,13 +99,13 @@ if (document.querySelector(".js-form-register")) {
   var validationRulesRegister = {
     // TODO validate name, as a standard username
     name: {
-      required: true // remote: {
-      //    url: '/user/check',
-      //    successAnswer: 'OK',
-      //    sendParam: 'name',
-      //    method: 'POST'
-      // }
-
+      required: true,
+      remote: {
+        url: '/user/check',
+        successAnswer: 'OK',
+        sendParam: 'name',
+        method: 'POST'
+      }
     },
     email: {
       required: true,
@@ -131,7 +141,10 @@ if (document.querySelector(".js-form-register")) {
       remote: "Email already in use",
       email: "Email not valid!"
     },
-    password: 'Password is not valid'
+    password: 'Password is not valid',
+    name: {
+      remote: "Name contains invalid characters"
+    }
   };
 
   var registerUser = function registerUser(form, values) {

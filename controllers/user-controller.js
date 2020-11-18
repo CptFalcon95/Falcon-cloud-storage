@@ -54,23 +54,27 @@ function registerUserPromise(req, res, userData) {
 }
 
 function login(req, res) {
-    try {       
-        const reqEmail = req.body.email;
-        console.log(reqEmail);
-        if (reqEmail) {
-            User.findOne({email: reqEmail}, async (err, user) => {
-                if (err) console.log(err);
-                const match = await bcrypt.compare(req.body.password, user.password || "");
+    try {
+        const email = req.body.email;
+        const password = req.body.password;
+        User.findOne({email: email}, async (err, user) => {
+            if (err) {
+                // console.log(err)
+            } else {
+                const match = await bcrypt.compare(password, user.password || "");
                 if (match) {
+                    // TODO Set session for user
                     console.log("Match");
+                    res.send(true);
                 }
                 else {
                     console.log("No match");
+                    res.send(false);
                 }
-            }); 
-        }
+            }
+        }); 
     } catch(err) {
-        console.log(err);
+        // console.log(err);
     }
 }
 
