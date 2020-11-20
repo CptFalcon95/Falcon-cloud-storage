@@ -66,6 +66,8 @@ if (document.querySelector(".js-form-register")) {
       .then(response => {
          // TODO User needs to be notified on the frontend.
          console.log(response);
+         sessionStorage.setItem("registerSuccess", true);
+         window.location.href = '/';
       })
       .catch(err => {
          // TODO User needs to be notified on the frontend.

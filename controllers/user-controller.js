@@ -6,39 +6,27 @@ const mongoose = require('mongoose');
 module.exports = {
     index,
     login,
+    loginForm,
+    logout,
     register,
-    registerForm
+    registerForm,
 }
 
 function index(req, res) {
-    // loggedIn is set hard, later replaced by authorization
-    // TODO Replace with authorization
-    // let currentUser = _getCurrentUser();
-    let loggedIn = false;
-    if(!loggedIn)
-     {
-        res.render('login', {
-            page: 'login'
+    let user = req.session.auth || false;
+    if(!user) {
+        res.redirect('user/login');
+    } else {
+        res.render('user_admin/index', {
+            isAdmin: user.isAdmin,
+            userData: user
         });
-     }
-     else {
-        // For future use:
-        // res.render('user_admin/index', {
-        //     loggedIn: currentUser.loggedIn,
-        //     isAdmin: currentUser.isAdmin,
-        //     userData: currentUser.data
-        // });
-        res.render('user_admin/index');
-     }
-}
-
-function getCurrentUser(req,res) {
-
+    }
 }
 
 function registerForm(req,res) {
     res.render('register', {
-        page: 'register'
+        page: 'register',
     });
 }
 
@@ -53,38 +41,60 @@ function registerUserPromise(req, res, userData) {
     });
 }
 
+function loginForm(req, res) {
+    res.render('login', {
+        page: 'login',
+        failed: false,
+    });
+}
+
 function login(req, res) {
-    try {
-        const email = req.body.email;
-        const password = req.body.password;
-        User.findOne({email: email}, async (err, user) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    let failed = true;
+
+    User
+    .findOne({email: email})
+    .exec()
+    .then(user => {
+        if (user == null) {
+            err = true;
+        }
+        bcrypt.compare(password, user.password, (err, result) => {
             if (err) {
-                // console.log(err)
+                err = true;
+            } 
+            if (result) {
+                err = false;
+                req.session.regenerate(function (err) {
+                    req.session.auth = user;
+                    console.log(`USER: ${req.session.auth.email}`);
+                    res.redirect('/');
+                });
             } else {
-                const match = await bcrypt.compare(password, user.password || "");
-                if (match) {
-                    // TODO Set session for user
-                    console.log("Match");
-                    res.send(true);
-                }
-                else {
-                    console.log("No match");
-                    res.send(false);
-                }
+                res.render('login', {
+                    page: 'register',
+                    failed: failed,
+                });
             }
-        }); 
-    } catch(err) {
-        // console.log(err);
-    }
+        });
+    })
+    .catch(err => {
+        console.log(err);
+        res.render('login', {
+            page: 'login',
+            failed: failed,
+        });
+    });
 }
 
 async function register(req, res) {
     try {
         const user = {
             _id: mongoose.Types.ObjectId(),
-            name: req.body.name,
+            name: escape(req.body.name),
             password: bcrypt.hashSync(req.body.password, 10),
-            email: req.body.email,
+            email: escape(req.body.email),
             admin: 0,
             totalStorage: 1
         }
@@ -92,10 +102,13 @@ async function register(req, res) {
         res.status(201)
         .json({
             success: true,
-            createdUser: promiseResponse,
-        }).end();
-        
+        });
     } catch (err) {
         console.log(err);
     }    
+}
+
+function logout(req, res) {
+    req.session.destroy();
+    res.redirect('/');
 }

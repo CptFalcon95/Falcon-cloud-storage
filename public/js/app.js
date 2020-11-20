@@ -15,85 +15,7 @@
  */
 
 !function(s){"use strict";s("#sidebarToggle, #sidebarToggleTop").on("click",function(e){s("body").toggleClass("sidebar-toggled"),s(".sidebar").toggleClass("toggled"),s(".sidebar").hasClass("toggled")&&s(".sidebar .collapse").collapse("hide")}),s(window).resize(function(){s(window).width()<768&&s(".sidebar .collapse").collapse("hide"),s(window).width()<480&&!s(".sidebar").hasClass("toggled")&&(s("body").addClass("sidebar-toggled"),s(".sidebar").addClass("toggled"),s(".sidebar .collapse").collapse("hide"))}),s("body.fixed-nav .sidebar").on("mousewheel DOMMouseScroll wheel",function(e){if(768<s(window).width()){var o=e.originalEvent,l=o.wheelDelta||-o.detail;this.scrollTop+=30*(l<0?1:-1),e.preventDefault()}}),s(document).on("scroll",function(){100<s(this).scrollTop()?s(".scroll-to-top").fadeIn():s(".scroll-to-top").fadeOut()}),s(document).on("click","a.scroll-to-top",function(e){var o=s(this);s("html, body").stop().animate({scrollTop:s(o.attr("href")).offset().top},1e3,"easeInOutExpo"),e.preventDefault()})}(jQuery);
-// TODO Build login 
-// Check if the page contains the login form
-if (document.querySelector(".js-form-login")) {
-  var linkLogin = "/user/login";
-  var validationRulesLogin = {
-    email: {
-      required: true,
-      remote: {
-        url: '/user/check',
-        successAnswer: 'NOT OK',
-        sendParam: 'email',
-        method: 'POST'
-      }
-    },
-    password: {
-      required: true
-    }
-  };
-  var validationMessagesLogin = {
-    email: {
-      email: 'Email is required',
-      remote: 'Email or password invalid'
-    },
-    password: 'Password is required'
-  }; // This variable ensures that the form does not submit more than once.
-  // There is a bug with the validation package, this is a work around.
-  // I'll fix this later.
-  // FIXME Submit form submits more than once.
-
-  var submitted = false;
-
-  var loginUser = function loginUser(form, values) {
-    console.log("loginUser");
-    fetch(linkLogin, {
-      headers: {
-        "Content-Type": "application/json; charset=utf-8"
-      },
-      method: 'POST',
-      body: JSON.stringify(values)
-    }).then(function (res) {
-      return res.json();
-    }) // parse response as JSON (can be res.text() for plain response)
-    .then(function (response) {
-      // TODO Notify user of login success/failure
-      if (response == false) {
-        submitted = false;
-      } else {
-        // Refresh page
-        console.log("Logged IN");
-      }
-    })["catch"](function (err) {
-      alert("sorry, there are no results for your search");
-    });
-  };
-
-  document.querySelector("#login-btn").addEventListener('click', function (event) {
-    console.log("klik");
-    new window.JustValidate('.js-form-login', {
-      rules: validationRulesLogin,
-      messages: validationMessagesLogin,
-      focusWrongField: true,
-      colorWrong: '#ED4C67',
-      tooltip: {
-        fadeOutTime: 4000 // default value - 5000 
-
-      },
-      submitHandler: function submitHandler(form, values) {
-        if (!submitted) loginUser(form, values);
-        submitted = true;
-      },
-      invalidFormCallback: function invalidFormCallback(errors) {
-        submitted = false;
-      }
-    });
-  });
-}
-
-; // Check if the page contains the register form
-
+// Check if the page contains the register form
 if (document.querySelector(".js-form-register")) {
   var linkRegister = "/user/register";
   var validationRulesRegister = {
@@ -161,6 +83,8 @@ if (document.querySelector(".js-form-register")) {
     .then(function (response) {
       // TODO User needs to be notified on the frontend.
       console.log(response);
+      sessionStorage.setItem("registerSuccess", true);
+      window.location.href = '/';
     })["catch"](function (err) {
       // TODO User needs to be notified on the frontend.
       console.log("sorry, there went something wrong");
@@ -170,7 +94,7 @@ if (document.querySelector(".js-form-register")) {
   // FIXME Submit form submits more than once.
 
 
-  var _submitted = false;
+  var submitted = false;
   document.querySelector("#register-btn").addEventListener('click', function (event) {
     // This keeps firing multiple times after a 
     // invalidated field was corrected en submitted again
@@ -183,11 +107,11 @@ if (document.querySelector(".js-form-register")) {
 
       },
       submitHandler: function submitHandler(form, values) {
-        if (!_submitted) registerUser(form, values);
-        _submitted = true;
+        if (!submitted) registerUser(form, values);
+        submitted = true;
       },
       invalidFormCallback: function invalidFormCallback() {
-        _submitted = false;
+        submitted = false;
       }
     });
   });

@@ -10,7 +10,6 @@ function checkCredentialsPromise(req, res) {
     return new Promise((resolve, reject) => {
         const reqEmail = req.body.email || false;
         const reqName = req.body.name || false;
-        const reqPasswd = req.body.passwd || false;
         if (reqEmail) {
             checkEmail(reqEmail, resolve, reject);
         } else if (reqName) {
@@ -30,10 +29,9 @@ async function checkCredentials(req, res) {
 
 function checkName(reqName, resolve, reject) {
     try {
-        const regexPattern = "[A-Za-z0-9_-]+";
+        const regexPattern = /[A-Za-z0-9_-]+/;
         const regex = new RegExp(regexPattern);
         if(regex.test(reqName)) {
-            console.log("OK");
             resolve("OK");
         } else {
             resolve("NOT OK");
@@ -44,12 +42,20 @@ function checkName(reqName, resolve, reject) {
     }
 }
 
+
+// Check if email is already present in the database, and test it with a regex.
 function checkEmail(reqEmail, resolve, reject) {
     try {
         User.find({email: reqEmail}, (err, found) => {
             if (err) reject(err); 
             if (found.length == 0) {
-                resolve("OK");
+                const regexPattern = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+                const regex = new RegExp(regexPattern);
+                if(regex.test(reqEmail)) {
+                    resolve("OK");
+                } else {
+                    resolve("NOT OK");
+                }
             } else {
                 resolve("NOT OK");
             }

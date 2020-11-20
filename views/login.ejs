@@ -19,7 +19,16 @@
                     <div class="col-md-6 pt-4 pb-3 border login-form">
                         <div class="login-form-content w-100">
                             <h5 class="pb-2 d-xs-none text-uppercase">Enter your credentials</h5>
-                            <form action="#" class="js-form-login">
+                            <form action="/user/login" method="POST" class="js-form-login">
+                                <% if (failed) { %>
+                                    <div class="form-row">
+                                        <div class="col-12 mt-2">
+                                            <div class="alert alert-danger w-100" role="alert">
+                                                Email or password incorrect
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% } %>
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
                                         <div class="just-validate-tooltip-container">
@@ -42,7 +51,7 @@
                             </form>
                         </div>
                     </div>
-                </div>    
+                </div>
             </div>
         </div>
     </div>
