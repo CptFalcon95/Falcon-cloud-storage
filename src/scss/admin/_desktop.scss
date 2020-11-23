@@ -17,13 +17,21 @@
         position: fixed;
         margin-top: 60px;
         min-height: calc(100% - 60px) !important;
-        width: 225px !important;
+        width: 200px !important;
+        .nav-item .nav-link {
+            width: 200px !important;
+        }
+    }
+
+    div.files-wrapper {
+        min-height: 85vh;
+        margin-top: 200px;
+        background: #2f2f2f;
     }
 
     #content-wrapper {
-        margin-left: 224px;
+        margin-left: 200px;
         margin-top: 60px;
-        z-index: -9999;
     }
     .text-muted {
         color: #6c757d !important;

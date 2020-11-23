@@ -12,6 +12,7 @@ module.exports = {
     registerForm,
 }
 
+// Render home page according to login status
 function index(req, res) {
     let user = req.session.auth || false;
     if(!user) {
@@ -66,9 +67,8 @@ function login(req, res) {
             } 
             if (result) {
                 err = false;
-                req.session.regenerate(function (err) {
+                req.session.regenerate((err) => {
                     req.session.auth = user;
-                    console.log(`USER: ${req.session.auth.email}`);
                     res.redirect('/');
                 });
             } else {
@@ -98,7 +98,7 @@ async function register(req, res) {
             admin: 0,
             totalStorage: 1
         }
-        const promiseResponse = await registerUserPromise(req, res, user);
+        await registerUserPromise(req, res, user);
         res.status(201)
         .json({
             success: true,

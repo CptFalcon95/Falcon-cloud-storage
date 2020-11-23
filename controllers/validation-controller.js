@@ -42,7 +42,6 @@ function checkName(reqName, resolve, reject) {
     }
 }
 
-
 // Check if email is already present in the database, and test it with a regex.
 function checkEmail(reqEmail, resolve, reject) {
     try {

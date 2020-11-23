@@ -4,6 +4,7 @@
 @import '../vendor/sbadmin/sb-admin-2.scss';
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400&display=swap');
 @import '../vendor/just-validate-tooltip.min.scss';
+@import '../vendor/bootstrap-lightbox.scss';
 
 
 $small-display : "575px";
@@ -11,3 +12,18 @@ $small-display : "575px";
 @import 'topbar';
 @import 'sidebar';
 @import 'recent-files';
+@import 'footer';
+
+
+.btn {
+    border-radius: 2px;
+}
+
+section.files {
+    background: #2f2f2f;
+    padding: 15px;
+}
+
+.parallax-mirror {
+    z-index: 0 !important;
+}

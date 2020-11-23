@@ -57,7 +57,8 @@ export const jsDeps = () => {
     'src/vendor/bootstrap.js',
     'src/vendor/just-validate.min.js',
     'src/vendor/sb-admin-2.min.js',
-    'src/vendor/parallax.js'
+    'src/vendor/parallax.js',
+    'src/vendor/bootstrap-lightbox.min.js'
   ];
   return src(files)
     .pipe(concat('main.deps.js'))
