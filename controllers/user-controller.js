@@ -35,9 +35,9 @@ function registerUserPromise(req, res, userData) {
         const user = new User(userData);
         console.log(user);
         user
-            .save()
-            .then(result => resolve(result))
-            .catch(err => reject(err));
+        .save()
+        .then(result => resolve(result))
+        .catch(err => reject(err));
     });
 }
 
@@ -58,11 +58,11 @@ function login(req, res) {
     .exec()
     .then(user => {
         if (user == null) {
-            err = true;
+            failed = true;
         }
         bcrypt.compare(password, user.password, (err, result) => {
             if (err) {
-                err = true;
+                failed = true;
             } 
             if (result) {
                 err = false;
