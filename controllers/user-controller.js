@@ -95,6 +95,7 @@ async function register(req, res) {
     try {
         const user = {
             _id: mongoose.Types.ObjectId(),
+            // FIXME escaped characters are not rendered in unicode
             name: escape(req.body.name),
             password: bcrypt.hashSync(req.body.password, 10),
             email: escape(req.body.email),

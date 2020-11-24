@@ -538,9 +538,19 @@ if (document.querySelector(".js-form-register")) {
 
 
 if (document.querySelector("#uploadForm")) {
-  document.querySelector("#uploadForm").addEventListener("submit", function (event) {
-    event.preventDefault(); // const filesInput = jQuery('#fileInput').get(0).files;
+  var upload = function upload(files) {
+    fetch('user/upload', {
+      method: 'POST',
+      body: files
+    }).then(function (response) {
+      console.log(response);
+    })["catch"](function (err) {
+      console.log("sorry, there went something wrong");
+    });
+  };
 
+  document.querySelector("#uploadForm").addEventListener("submit", function (event) {
+    event.preventDefault();
     var filesInput = document.querySelector('input[type="file"]').files;
     var formData = new FormData();
 
@@ -551,19 +561,4 @@ if (document.querySelector("#uploadForm")) {
 
     upload(formData);
   });
-
-  var upload = function upload(files) {
-    console.log("Files");
-    console.log(files.get('files[0]'));
-    fetch('user/upload', {
-      method: 'POST',
-      body: files
-    }).then(function (response) {
-      // TODO User needs to be notified on the frontend.
-      console.log(response);
-    })["catch"](function (err) {
-      // TODO User needs to be notified on the frontend.
-      console.log("sorry, there went something wrong");
-    });
-  };
 }

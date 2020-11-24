@@ -36,7 +36,7 @@ app.use(session({
   saveUninitialized: false,
   store: new MongoStore({ 
     db: "nodeapp",
-    url: "mongodb+srv://nodeapp:nodeapp@nodeapp.qqikt.mongodb.net/nodeapp"
+    url: process.env.DATABASE_URL
   })
 }));
 
