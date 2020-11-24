@@ -9,9 +9,10 @@ const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+
 const indexRouter = require('./routes/index-route');
 const userRouter = require('./routes/user-route');
-const userController = require('./controllers/user-controller');
+
 const app = express();
 
 app.set("view engine", "ejs");
