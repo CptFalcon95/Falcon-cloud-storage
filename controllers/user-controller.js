@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const User = require('../models/user-model');
 const mongoose = require('mongoose');
-
+const fs = require('./file-system-controller');
 module.exports = {
     index,
     login,
@@ -37,7 +37,10 @@ function registerUserPromise(req, res, userData) {
         console.log(user);
         user
         .save()
-        .then(result => resolve(result))
+        .then((result) => {
+            fs.createFolder(user._id, true, null);
+            resolve(result);
+        })
         .catch(err => reject(err));
     });
 }

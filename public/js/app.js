@@ -535,3 +535,35 @@ if (document.querySelector(".js-form-register")) {
     });
   });
 } //Endif
+
+
+if (document.querySelector("#uploadForm")) {
+  document.querySelector("#uploadForm").addEventListener("submit", function (event) {
+    event.preventDefault(); // const filesInput = jQuery('#fileInput').get(0).files;
+
+    var filesInput = document.querySelector('input[type="file"]').files;
+    var formData = new FormData();
+
+    for (var i = 0; i < filesInput.length; i++) {
+      var file = filesInput[i];
+      formData.append('files[]', file);
+    }
+
+    upload(formData);
+  });
+
+  var upload = function upload(files) {
+    console.log("Files");
+    console.log(files.get('files[0]'));
+    fetch('user/upload', {
+      method: 'POST',
+      body: files
+    }).then(function (response) {
+      // TODO User needs to be notified on the frontend.
+      console.log(response);
+    })["catch"](function (err) {
+      // TODO User needs to be notified on the frontend.
+      console.log("sorry, there went something wrong");
+    });
+  };
+}

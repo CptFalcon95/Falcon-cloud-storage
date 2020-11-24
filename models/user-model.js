@@ -7,6 +7,8 @@ const userSchema = mongoose.Schema({
     email: String,
     admin: Boolean,
     totalStorage: Number
+}, {
+    collection: 'users'
 });
 
 module.exports = mongoose.model('User', userSchema);
