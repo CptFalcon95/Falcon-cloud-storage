@@ -13,8 +13,9 @@ const cookieParser = require('cookie-parser');
 const indexRouter = require('./routes/index-route');
 const userRouter = require('./routes/user-route');
 
-const app = express();
+const auth = require('./middleware/auth-middleware');
 
+const app = express();
 app.set("view engine", "ejs");
 app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '/public'));

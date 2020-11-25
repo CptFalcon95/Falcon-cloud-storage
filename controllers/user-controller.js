@@ -14,15 +14,11 @@ module.exports = {
 
 // Render home page according to login status
 function index(req, res) {
-    let user = req.session.auth || false;
-    if(!user) {
-        res.redirect('user/login');
-    } else {
-        res.render('user_admin/index', {
-            isAdmin: user.isAdmin,
-            userData: user
-        });
-    }
+    let user = req.session.auth;
+    res.render('user_admin/index', {
+        isAdmin: user.isAdmin,
+        userData: user
+    });
 }
 
 function registerForm(req,res) {
@@ -72,7 +68,7 @@ function login(req, res) {
                 err = false;
                 req.session.regenerate((err) => {
                     req.session.auth = user;
-                    res.redirect('/');
+                    res.redirect('/user');
                 });
             } else {
                 res.render('login', {

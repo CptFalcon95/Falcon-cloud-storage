@@ -1,5 +1,12 @@
 const express = require('express');
 
-function index(req, res) {
+module.exports = {
+    index
+}
 
+function index(req, res) {
+    res.render('login', {
+        page: 'login',
+        failed: false,
+    });
 }

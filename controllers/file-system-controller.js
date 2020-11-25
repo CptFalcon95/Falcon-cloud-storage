@@ -31,6 +31,9 @@ function createFolder(id, root, folderName) {
     }
 }
 
+// TODO initialize if user_data folder is not created. Run this function in app.js check if created
+//
+
 // Upload file
 function upload(req, res) {
     // const id = req.session.auth._id;

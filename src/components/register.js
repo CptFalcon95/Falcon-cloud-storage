@@ -1,14 +1,14 @@
 // Check if the page contains the register form
 if (document.querySelector(".js-form-register")) {
 
-   const linkRegister = "/user/register";
+   const linkRegister = "/register";
 
    const validationRulesRegister = {
       // TODO validate name, as a standard username
       name: {
          required: true,
          remote: {
-            url: '/user/check',
+            url: '/check',
             successAnswer: 'OK',
             sendParam: 'name',
             method: 'POST'
@@ -18,7 +18,7 @@ if (document.querySelector(".js-form-register")) {
          required: true,
          email: true,
          remote: {
-            url: '/user/check',
+            url: '/check',
             successAnswer: 'OK',
             sendParam: 'email',
             method: 'POST'
