@@ -10,5 +10,4 @@ router.get('/register', auth.checkGuest, userController.registerForm);
 router.post('/register', auth.checkGuest, userController.register);
 router.post('/check', auth.checkGuest, validationController.checkCredentials);
 
-
 module.exports = router;

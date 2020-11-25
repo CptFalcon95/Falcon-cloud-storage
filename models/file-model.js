@@ -8,7 +8,7 @@ const fileSchema = mongoose.Schema({
     owner: String,
     sharedOwners: String,
 }, {
-    collection: 'uploads'
+    collection: 'files'
 });
 
 module.exports = mongoose.model('File', fileSchema);

@@ -1,7 +1,7 @@
 module.exports = {
     checkGuest,
     checkLogin,
-    checkAdmin,
+    // checkAdmin,
 };
 
 function checkLogin(req, res, next) {
@@ -25,13 +25,13 @@ function checkGuest(req, res, next) {
     }
 }
 
-function checkAdmin(req, res, next) {
-    // if (req.session != undefined)
-    // {
-    //     if (req.session.auth || req.path==='/') {
-     next();
-    //     } else {
-    //        res.redirect("/");
-    //     }
-    // }
-}
+// function checkAdmin(req, res, next) {
+//     if (req.session != undefined)
+//     {
+//         if (req.session.auth || req.path==='/') {
+//      next();
+//         } else {
+//            res.redirect("/");
+//         }
+//     }
+// }
