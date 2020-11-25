@@ -7,6 +7,9 @@ const fileSchema = mongoose.Schema({
     filePath: String,
     owner: String,
     sharedOwners: String,
+    folders: [
+        {type: mongoose.Schema.Types.ObjectId, ref: 'Folder'}
+    ],
 }, {
     collection: 'files'
 });

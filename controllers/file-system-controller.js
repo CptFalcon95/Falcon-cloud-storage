@@ -41,11 +41,13 @@ function upload(req, res) {
     const userRoot = `${appDir}/user_data/${id}`;
     const files = req.files;
     for (let x = 0; x < files.length; x++) {
-        const newFileName = crypto.randomBytes(32).toString('hex');
         const originalFileName = files[x].originalname;
         const src = `${appDir}/tmp/${originalFileName}`;
         const fileExtention = path.extname(src);
+        
         const dest = `${userRoot}/${newFileName + fileExtention}`;
+        const newFileName = crypto.randomBytes(32).toString('hex');
+
         fs.renameSync(src, dest, err => {
             console.log("err");
         })
