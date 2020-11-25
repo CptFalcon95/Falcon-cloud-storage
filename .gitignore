@@ -1,5 +1,5 @@
 .env
-tmp
+tmp/*
 node_modules
 src/images/*
 user_data/*
