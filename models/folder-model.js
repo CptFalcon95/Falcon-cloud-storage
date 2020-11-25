@@ -9,7 +9,7 @@ const folderSchema = mongoose.Schema({
         {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
     ]
 }, {
-    collection: 'files'
+    collection: 'folders'
 });
 
 module.exports = mongoose.model('Folder', folderSchema);

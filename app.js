@@ -3,6 +3,7 @@ if(process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
 
+// Dependencies
 const express = require('express');
 const session = require('express-session');
 const mongoose = require('mongoose');
@@ -10,11 +11,14 @@ const MongoStore = require('connect-mongo')(session);
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
+// Routes
 const indexRouter = require('./routes/index-route');
 const userRouter = require('./routes/user-route');
 
+// Middleware
 const auth = require('./middleware/auth-middleware');
 
+// configure dependencies
 const app = express();
 app.set("view engine", "ejs");
 app.set('views', __dirname + '/views');
