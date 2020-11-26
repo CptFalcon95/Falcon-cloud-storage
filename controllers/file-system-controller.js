@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 const File = require('../models/file-model');
 const appDir = path.dirname(require.main.filename);
 
-//TODO Put this somewhere else
+//TODO Put this somewhere in a config file
 const compressedMimetypes = [  
     'application/zip', 
     'application/x-tar', 
@@ -39,35 +39,17 @@ const documentMimetypes = [
 
 function checkFileType(mimetype) {
     if(compressedMimetypes.indexOf(mimetype) >= 0) {
-        return {
-            ok: true,
-            file: 'compressed'
-        };
+        return { ok: true, file: 'compressed' };
     } else if (imageMimetypes.indexOf(mimetype) >= 0) {
-        return {
-            ok: true,
-            file: 'image'
-        };
+        return { ok: true, file: 'image' };
     } else if (audioMimetypes.indexOf(mimetype) >= 0) {
-        return {
-            ok: true,
-            file: 'audio'
-        };
+        return { ok: true, file: 'audio' };
     } else if (videoMimetypes.indexOf(mimetype) >= 0) {
-        return {
-            ok: true,
-            file: 'video'
-        };
+        return { ok: true, file: 'video' };
     } else if (documentMimetypes.indexOf(mimetype) >= 0) {
-        return {
-            ok: true,
-            file: 'document'
-        };
+        return { ok: true, file: 'document' };
     } else {
-        return {
-            ok: false,
-            file: 'unsupported'
-        };
+        return { ok: false, file: 'unsupported' };
     }
 }
 
