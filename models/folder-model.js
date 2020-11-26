@@ -3,11 +3,14 @@ const mongoose = require('mongoose');
 const folderSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     folderName: String,
-    path: String,
-    sharedOwners: String,
-    owner: [
-        {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
-    ]
+    owner: {
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'User'
+    },
+    sharedOwners: [{
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'User'
+    }],
 }, {
     collection: 'folders'
 });

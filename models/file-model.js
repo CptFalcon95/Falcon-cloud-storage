@@ -2,14 +2,23 @@ const mongoose = require('mongoose');
 
 const fileSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    fileName: String,
-    fileType: String,
-    filePath: String,
-    owner: String,
-    sharedOwners: String,
-    folders: [
-        {type: mongoose.Schema.Types.ObjectId, ref: 'Folder'}
-    ],
+    name: String,
+    originalName: String,
+    type: String,
+    path: String,
+    favorited: Boolean,
+    owner: {
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'User'
+    },
+    sharedOwners: [{
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'User'
+    }],
+    folder: {
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Folder'
+    }
 }, {
     collection: 'files'
 });

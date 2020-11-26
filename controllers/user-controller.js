@@ -27,20 +27,6 @@ function registerForm(req,res) {
     });
 }
 
-function registerUserPromise(req, res, userData) {
-    return new Promise((resolve, reject) => {
-        const user = new User(userData);
-        console.log(user);
-        user
-        .save()
-        .then((result) => {
-            fs.createFolder(user._id, true, null);
-            resolve(result);
-        })
-        .catch(err => reject(err));
-    });
-}
-
 function loginForm(req, res) {
     res.render('login', {
         page: 'login',
@@ -106,6 +92,20 @@ async function register(req, res) {
     } catch (err) {
         console.log(err);
     }    
+}
+
+function registerUserPromise(req, res, userData) {
+    return new Promise((resolve, reject) => {
+        const user = new User(userData);
+        console.log(user);
+        user
+        .save()
+        .then((result) => {
+            fs.createFolder(user._id, true, null);
+            resolve(result);
+        })
+        .catch(err => reject(err));
+    });
 }
 
 function logout(req, res) {

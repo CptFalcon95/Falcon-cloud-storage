@@ -48,13 +48,55 @@ function upload(req, res) {
         const newFileName = crypto.randomBytes(32).toString('hex');
         const dest = `${userRoot}/${newFileName + fileExtention}`;
 
-        fs.renameSync(src, dest, err => {
-            console.log("err");
-        })
+        const data = {
+            name: newFileName,
+            originalName: originalFileName,
+            path: dest,
+            type: fileExtention,
+        }
+
+        // Move files from tmp to user folder
+        if (fs.renameSync(src, dest)) {
+            // fileUpload(req, res, data)
+        }
     }
     res.send();
 }
 // Delete file
+
+async function fileUpload(req, res, data) {
+    try {
+        const user = {
+            _id: mongoose.Types.ObjectId(),
+            // FIXME escaped characters are not rendered in unicode
+            fileName: data,
+            fileType: bcrypt.hashSync(req.body.password, 10),
+            filePath: escape(req.body.email),
+            admin: 0,
+            totalStorage: 1
+        }
+        await fileUploadPromise(req, res, file);
+        res.status(201)
+        .json({
+            success: true,
+        });
+    } catch (err) {
+        console.log(err);
+    }    
+}
+
+function fileUploadPromise(req, res, fileData) {
+    return new Promise((resolve, reject) => {
+        const file = new File(fileData);
+        console.log(file);
+        file
+        .save()
+        .then((result) => {
+            resolve(result);
+        })
+        .catch(err => reject(err));
+    });
+}
 
 // checkFileType returns false or file type is supported
 

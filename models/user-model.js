@@ -6,7 +6,15 @@ const userSchema = mongoose.Schema({
     password: String,
     email: String,
     admin: Boolean,
-    totalStorage: Number
+    totalStorage: Number,
+    sharedFolders: [{
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Folder'
+    }],
+    sharedFiles: [{
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'File'
+    }],
 }, {
     collection: 'users'
 });
