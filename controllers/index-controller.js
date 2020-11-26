@@ -1,10 +1,17 @@
 const express = require('express');
 
 module.exports = {
-    index
+    loginForm,
+    registerForm
 }
 
-function index(req, res) {
+function registerForm(req,res) {
+    res.render('register', {
+        page: 'register',
+    });
+}
+
+function loginForm(req, res) {
     res.render('login', {
         page: 'login',
         failed: false,

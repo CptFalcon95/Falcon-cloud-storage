@@ -21,7 +21,7 @@ const upload = multer({
     fileFilter: (req, file, cb) => {
         const checkFile = fsConstroller.checkFileType(file.mimetype);
         if (checkFile.ok == false) {
-            return cb(new Error(`Wrong file typ: ${checkFile.file}`));
+            return cb(new Error(`Wrong file type`));
         }
         cb(null, true)
     }

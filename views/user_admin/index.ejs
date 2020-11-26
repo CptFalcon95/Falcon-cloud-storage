@@ -23,7 +23,20 @@
                         </a>
                     </div>
                     <div class="p-3">
-
+ 
+                        <div class="row text-center text-lg-left">
+                            <% for( let i = 0; i < fileData.length; i++ ) { %>
+                                <div class="col-lg-3 col-md-4 col-6">
+                                    <h2><%= fileData[i].type %></h2>
+                                    <% if (fileData[i].type == 'image') { %>
+                                        <a class="d-block mb-4 h-100" data-toggle="lightbox" href="#demoLightbox">
+                                            <h2><%= fileData[i]._id %></h2>
+                                            <img class="img-fluid img-thumbnail" src="/file/<%= fileData[i]._id %>" alt="">
+                                        </a>
+                                    <% } %>
+                                </div>
+                            <% } %>
+                        </div>
                     </div>  
                 </section>
             </div>

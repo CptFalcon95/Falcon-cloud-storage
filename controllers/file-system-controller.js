@@ -66,7 +66,7 @@ function checkFileType(mimetype) {
     } else {
         return {
             ok: false,
-            file: file.originalname
+            file: 'unsupported'
         };
     }
 }
@@ -111,25 +111,27 @@ async function storeFiles(req, res) {
         for (let x = 0; x < files.length; x++) {
             const originalFileName = files[x].originalname;
             const src = `${appDir}/tmp/${originalFileName}`;
-            const fileExtention = path.extname(src);
+            const fileExtension = path.extname(src);
     
             const newFileName = crypto.randomBytes(32).toString('hex');
-            const dest = `${userRoot}/${newFileName + fileExtention}`;
-    
-            const data = {
-                _id: mongoose.Types.ObjectId(),
-                name: newFileName,
-                originalName: originalFileName,
-                extention: fileExtention,
-                type: checkFileType(files[x]).file,
-                favorited: false,
-                owner: id,
-                folder: null,
-            }
+            const dest = `${userRoot}/${newFileName + fileExtension}`;
 
-            // Move files from tmp to user folder
-            if(await storeDataPromise(req, res, data)) {
-                fs.renameSync(src, dest);
+            if(checkFileType(files[x].mimetype).ok) {
+                const data = {
+                    _id: mongoose.Types.ObjectId(),
+                    name: newFileName,
+                    originalName: originalFileName,
+                    extension: fileExtension,
+                    type: checkFileType(files[x].mimetype).file,
+                    favorited: false,
+                    owner: id,
+                    folder: null,
+                }
+
+                // Move files from tmp to user folder
+                if(await storeDataPromise(req, res, data)) {
+                    fs.renameSync(src, dest);
+                }
             }
         }
         res.status(201)
@@ -153,15 +155,22 @@ function storeDataPromise(req, res, fileData) {
     });
 }
 
-function getFiles(id) {
-    File.find({owner: id}, {sharedOwners: 0}, (err, results) => {
-        return results;
+function getUserFiles(id, folder) {
+    return new Promise((resolve, reject) => {
+        File.find({owner: id, folder: folder}, {sharedOwners: 0, name: 0, extension: 0, owner: 0}, (err, results) => {
+            if(err) {
+                console.log(err);
+                reject(err);
+            } else {
+                resolve(results);
+            }
+        });
     });
 }
 
 function serveFile(req, res) {
     File.findOne({_id: req.params.id}, {sharedOwners: 0}, (err, file) => {
-        res.sendFile(`${appDir}/user_data/${file.owner}/${file.name + file.extention}`);
+        res.sendFile(`${appDir}/user_data/${file.owner}/${file.name + file.extension}`);
     });
 }
 
@@ -169,6 +178,6 @@ module.exports = {
     createFolder,
     storeFiles,
     checkFileType,
-    getFiles,
+    getUserFiles,
     serveFile,
 }

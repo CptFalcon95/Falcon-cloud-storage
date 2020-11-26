@@ -5,7 +5,7 @@ const fileSchema = mongoose.Schema({
     name: String,
     originalName: String,
     type: String,
-    extention: String,
+    extension: String,
     favorited: Boolean,
     created: Date,
     owner: {

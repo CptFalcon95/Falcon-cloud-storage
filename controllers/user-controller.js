@@ -7,34 +7,24 @@ const fs = require('./file-system-controller');
 module.exports = {
     index,
     login,
-    loginForm,
     logout,
     register,
-    registerForm,
 }
 
 // Render home page according to login status
-function index(req, res) {
+async function index(req, res) {
     let user = req.session.auth;
-    const files = fs.getFiles(user._id);
-    console.log(user);
-    res.render('user_admin/index', {
-        isAdmin: user.isAdmin,
-        userData: user,
-        fileData: files
-    });
-}
-
-function registerForm(req,res) {
-    res.render('register', {
-        page: 'register',
-    });
-}
-
-function loginForm(req, res) {
-    res.render('login', {
-        page: 'login',
-        failed: false,
+    // const files = await fs.getUserFiles(user._id, null);
+    await fs.getUserFiles(user._id, null)
+    .then(files => {
+        res.render('user_admin/index', {
+            isAdmin: user.isAdmin,
+            userData: user,
+            fileData: files
+        });
+    })
+    .catch((err) => {
+        res.sendStatus(500);
     });
 }
 
