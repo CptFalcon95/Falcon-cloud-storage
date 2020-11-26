@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const User = require('../models/user-model');
 const mongoose = require('mongoose');
 const fs = require('./file-system-controller');
+
 module.exports = {
     index,
     login,
@@ -15,9 +16,12 @@ module.exports = {
 // Render home page according to login status
 function index(req, res) {
     let user = req.session.auth;
+    const files = fs.getFiles(user._id);
+    console.log(user);
     res.render('user_admin/index', {
         isAdmin: user.isAdmin,
-        userData: user
+        userData: user,
+        fileData: files
     });
 }
 

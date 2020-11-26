@@ -14,6 +14,7 @@ const cookieParser = require('cookie-parser');
 // Routes
 const indexRouter = require('./routes/index-route');
 const userRouter = require('./routes/user-route');
+const fileRouter = require('./routes/file-route');
 
 // Middleware
 const auth = require('./middleware/auth-middleware');
@@ -53,6 +54,7 @@ db.once('open', () => console.log("DB connected"));
 // Routers
 app.use('/', indexRouter);
 app.use('/user', userRouter);
+app.use('/file', fileRouter);
 
 // Start server
 app.listen(process.env.PORT || 3000, () => {

@@ -4,7 +4,6 @@ const crypto = require("crypto");
 const mongoose = require("mongoose");
 
 const File = require('../models/file-model');
-const { cpuUsage } = require('process');
 const appDir = path.dirname(require.main.filename);
 
 //TODO Put this somewhere else
@@ -38,34 +37,28 @@ const documentMimetypes = [
     'application/pdf'
 ];
 
-function checkFileType(file) {
-    const mimetype = file.mimetype;
+function checkFileType(mimetype) {
     if(compressedMimetypes.indexOf(mimetype) >= 0) {
-        console.log('compressed');
         return {
             ok: true,
             file: 'compressed'
         };
     } else if (imageMimetypes.indexOf(mimetype) >= 0) {
-        console.log('image');
         return {
             ok: true,
             file: 'image'
         };
     } else if (audioMimetypes.indexOf(mimetype) >= 0) {
-        console.log('audio');
         return {
             ok: true,
             file: 'audio'
         };
     } else if (videoMimetypes.indexOf(mimetype) >= 0) {
-        console.log('video');
         return {
             ok: true,
             file: 'video'
         };
     } else if (documentMimetypes.indexOf(mimetype) >= 0) {
-        console.log('document');
         return {
             ok: true,
             file: 'document'
@@ -114,6 +107,7 @@ async function storeFiles(req, res) {
         const id = req.session.auth._id;
         const userRoot = `${appDir}/user_data/${id}`;
         const files = req.files;
+
         for (let x = 0; x < files.length; x++) {
             const originalFileName = files[x].originalname;
             const src = `${appDir}/tmp/${originalFileName}`;
@@ -132,12 +126,11 @@ async function storeFiles(req, res) {
                 owner: id,
                 folder: null,
             }
+
             // Move files from tmp to user folder
-            
             if(await storeDataPromise(req, res, data)) {
                 fs.renameSync(src, dest);
             }
-            
         }
         res.status(201)
         .json({
@@ -160,10 +153,22 @@ function storeDataPromise(req, res, fileData) {
     });
 }
 
-// checkFileType returns false or file type is supported
+function getFiles(id) {
+    File.find({owner: id}, {sharedOwners: 0}, (err, results) => {
+        return results;
+    });
+}
+
+function serveFile(req, res) {
+    File.findOne({_id: req.params.id}, {sharedOwners: 0}, (err, file) => {
+        res.sendFile(`${appDir}/user_data/${file.owner}/${file.name + file.extention}`);
+    });
+}
 
 module.exports = {
     createFolder,
     storeFiles,
-    checkFileType
+    checkFileType,
+    getFiles,
+    serveFile,
 }

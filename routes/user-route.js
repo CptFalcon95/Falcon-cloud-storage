@@ -19,7 +19,7 @@ const storage = multer.diskStorage({
 const upload = multer({
     storage: storage,
     fileFilter: (req, file, cb) => {
-        const checkFile = fsConstroller.checkFileType(file);
+        const checkFile = fsConstroller.checkFileType(file.mimetype);
         if (checkFile.ok == false) {
             return cb(new Error(`Wrong file typ: ${checkFile.file}`));
         }

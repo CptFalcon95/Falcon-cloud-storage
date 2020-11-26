@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const File = require('./file-model');
 
 const userSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,

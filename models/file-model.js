@@ -7,6 +7,7 @@ const fileSchema = mongoose.Schema({
     type: String,
     extention: String,
     favorited: Boolean,
+    created: Date,
     owner: {
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'User'
