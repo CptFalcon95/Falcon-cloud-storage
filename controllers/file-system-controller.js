@@ -37,6 +37,7 @@ const documentMimetypes = [
     'application/pdf'
 ];
 
+// Function that validates mimetype and categorizes mimetypes for frontend design purposes
 function checkFileType(mimetype) {
     if(compressedMimetypes.indexOf(mimetype) >= 0) {
         return { ok: true, file: 'compressed' };
