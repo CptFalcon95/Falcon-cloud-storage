@@ -9,15 +9,22 @@ const auth = require('../middleware/auth-middleware');
 
 const appDir = path.dirname(require.main.filename);
 const storage = multer.diskStorage({
-    destination: function (req, file, callback) {
+    destination: (req, file, callback) => {
         callback(null, `${appDir}/tmp`,);
     },
-    filename: function (req, file, callback) {
+    filename: (req, file, callback) => {
         callback(null, file.originalname);
     }
 });
 const upload = multer({
     storage: storage,
+    fileFilter: (req, file, cb) => {
+        const checkFile = fsConstroller.checkFileType(file);
+        if (checkFile.ok == false) {
+            return cb(new Error(`Wrong file typ: ${checkFile.file}`));
+        }
+        cb(null, true)
+    }
 });
 
 router.get('/', auth.checkLogin, userController.index);
