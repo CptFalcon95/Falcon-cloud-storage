@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require("crypto");
+const mongoose = require("mongoose");
 
 const File = require('../models/file-model');
 const appDir = path.dirname(require.main.filename);
@@ -36,46 +37,62 @@ function createFolder(id, root, folderName) {
 //
 
 // Upload file
-function upload(req, res) {
-    const id = req.session.auth._id;
-    const userRoot = `${appDir}/user_data/${id}`;
-    const files = req.files;
-    for (let x = 0; x < files.length; x++) {
-        const originalFileName = files[x].originalname;
-        const src = `${appDir}/tmp/${originalFileName}`;
-        const fileExtention = path.extname(src);
+// function upload(req, res) {
+//     const id = req.session.auth._id;
+//     const userRoot = `${appDir}/user_data/${id}`;
+//     const files = req.files;
+//     for (let x = 0; x < files.length; x++) {
+//         const originalFileName = files[x].originalname;
+//         const src = `${appDir}/tmp/${originalFileName}`;
+//         const fileExtention = path.extname(src);
 
-        const newFileName = crypto.randomBytes(32).toString('hex');
-        const dest = `${userRoot}/${newFileName + fileExtention}`;
+//         const newFileName = crypto.randomBytes(32).toString('hex');
+//         const dest = `${userRoot}/${newFileName + fileExtention}`;
 
-        const data = {
-            name: newFileName,
-            originalName: originalFileName,
-            path: dest,
-            type: fileExtention,
-        }
+//         const data = {
+//             name: newFileName,
+//             originalName: originalFileName,
+//             path: dest,
+//             type: fileExtention,
+//             favorited: false,
+//         }
 
-        // Move files from tmp to user folder
-        if (fs.renameSync(src, dest)) {
-            // fileUpload(req, res, data)
-        }
-    }
-    res.send();
-}
+//         // Move files from tmp to user folder
+//         if (fs.renameSync(src, dest)) {
+//             fileUpload(req, res, data)
+//         }
+//     }
+//     res.send();
+// }
 // Delete file
 
-async function fileUpload(req, res, data) {
+async function storeFiles(req, res) {
     try {
-        const user = {
-            _id: mongoose.Types.ObjectId(),
-            // FIXME escaped characters are not rendered in unicode
-            fileName: data,
-            fileType: bcrypt.hashSync(req.body.password, 10),
-            filePath: escape(req.body.email),
-            admin: 0,
-            totalStorage: 1
+        const id = req.session.auth._id;
+        const userRoot = `${appDir}/user_data/${id}`;
+        const files = req.files;
+        for (let x = 0; x < files.length; x++) {
+            const originalFileName = files[x].originalname;
+            const src = `${appDir}/tmp/${originalFileName}`;
+            const fileExtention = path.extname(src);
+    
+            const newFileName = crypto.randomBytes(32).toString('hex');
+            const dest = `${userRoot}/${newFileName + fileExtention}`;
+    
+            const data = {
+                _id: mongoose.Types.ObjectId(),
+                name: newFileName,
+                originalName: originalFileName,
+                type: fileExtention,
+                favorited: false,
+                owner: id,
+                folder: null,
+            }
+            console.log(data);
+            // Move files from tmp to user folder
+            fs.renameSync(src, dest)
+            await fileUploadPromise(req, res, data);
         }
-        await fileUploadPromise(req, res, file);
         res.status(201)
         .json({
             success: true,
@@ -102,5 +119,5 @@ function fileUploadPromise(req, res, fileData) {
 
 module.exports = {
     createFolder,
-    upload,
+    storeFiles,
 }

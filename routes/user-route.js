@@ -22,6 +22,6 @@ const upload = multer({
 
 router.get('/', auth.checkLogin, userController.index);
 router.get('/logout', auth.checkLogin, userController.logout);
-router.post('/upload', auth.checkLogin, upload.array('files[]', 8), fsConstroller.upload)
+router.post('/upload', auth.checkLogin, upload.array('files[]', 8), fsConstroller.storeFiles)
 
 module.exports = router;
