@@ -98,14 +98,15 @@ async function storeFiles(req, res) {
     
             const newFileName = crypto.randomBytes(32).toString('hex');
             const dest = `${userRoot}/${newFileName + fileExtension}`;
-
-            if(checkFileType(files[x].mimetype).ok) {
+            const mimetype = files[x].mimetype;
+            
+            if(checkFileType(mimetype).ok) {
                 const data = {
                     _id: mongoose.Types.ObjectId(),
                     name: newFileName,
                     originalName: originalFileName,
                     extension: fileExtension,
-                    type: checkFileType(files[x].mimetype).file,
+                    type: checkFileType(mimetype).file,
                     favorited: false,
                     owner: id,
                     folder: null,
@@ -153,7 +154,7 @@ function getUserFiles(id, folder) {
 
 function serveFile(req, res) {
     File.findOne({_id: req.params.id}, {sharedOwners: 0}, (err, file) => {
-        res.sendFile(`${appDir}/user_data/${file.owner}/${file.name + file.extension}`);
+        res.download(`${appDir}/user_data/${file.owner}/${file.name + file.extension}`, file.originalName);
     });
 }
 
