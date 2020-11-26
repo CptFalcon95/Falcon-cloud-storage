@@ -34,16 +34,18 @@ function checkAccess(req, res, next) {
         const fileId = req.params.id
         const user = req.session.auth;
         File.findOne({_id: fileId}, (err, result) => {
-            if(result.owner == user._id) {
-                next();
-            } else if (result.sharedOwners.indexOf(user._id) >= 0) {
-                next();
-            }
-            else {
+            if(result != null) {
+                if(result.owner == user._id) {
+                    next();
+                } else if (result.sharedOwners.indexOf(user._id) >= 0) {
+                    next();
+                } else {
+                    res.sendStatus(404);
+                }
+            } else {
                 res.sendStatus(404);
             }
         });
-
     } else {
         res.sendStatus(404);
     }
