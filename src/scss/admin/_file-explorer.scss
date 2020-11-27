@@ -1,0 +1,33 @@
+.files {
+    &-head {
+        background-color:#212121;
+        a.btn {
+            background-color: #10ac84;
+            border-color: #10ac84;
+        }
+    }
+}
+
+.files-wrapper {
+    .img {
+        &-thumbnail {
+            background-color: #343a40;
+            border-color: #212121;
+            object-fit: cover;
+            object-position: top;
+            padding: 5px;
+        }
+    }
+    table {
+        thead {
+            th {
+                border-top: none;
+            }
+        }
+        tbody {
+            tr:first-child th, tr:first-child td {
+                border-top: none;
+            }
+        }
+    }
+}

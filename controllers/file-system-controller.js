@@ -99,13 +99,14 @@ async function storeFiles(req, res) {
             const newFileName = crypto.randomBytes(32).toString('hex');
             const dest = `${userRoot}/${newFileName + fileExtension}`;
             const mimetype = files[x].mimetype;
-            
+            console.log(files[x].size);
             if(checkFileType(mimetype).ok) {
                 const data = {
                     _id: mongoose.Types.ObjectId(),
                     name: newFileName,
                     originalName: originalFileName,
                     extension: fileExtension,
+                    size: files[x].size,
                     type: checkFileType(mimetype).file,
                     favorited: false,
                     owner: id,
@@ -152,16 +153,25 @@ function getUserFiles(id, folder) {
     });
 }
 
-function serveFile(req, res) {
+function serveDownload(req, res) {
     File.findOne({_id: req.params.id}, {sharedOwners: 0}, (err, file) => {
         res.download(`${appDir}/user_data/${file.owner}/${file.name + file.extension}`, file.originalName);
     });
 }
+
+function serveFile(req, res) {
+    console.log('image');
+    File.findOne({_id: req.params.id}, {sharedOwners: 0}, (err, file) => {
+        res.sendFile(`${appDir}/user_data/${file.owner}/${file.name + file.extension}`, file.originalName);
+    });
+}
+
 
 module.exports = {
     createFolder,
     storeFiles,
     checkFileType,
     getUserFiles,
-    serveFile,
+    serveDownload,
+    serveFile
 }

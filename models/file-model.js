@@ -6,8 +6,17 @@ const fileSchema = mongoose.Schema({
     originalName: String,
     type: String,
     extension: String,
-    favorited: Boolean,
-    created: Date,
+    size: {
+        type: Number
+    },
+    favorited: {
+        type: Boolean,
+        default: false
+    },
+    created: {
+        type: Date,
+        default: Date.now
+    },
     owner: {
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'User'
@@ -17,7 +26,8 @@ const fileSchema = mongoose.Schema({
         ref: 'User'
     }],
     folder: {
-        type: mongoose.Schema.Types.ObjectId, 
+        type: mongoose.Schema.Types.ObjectId,
+        default: null,
         ref: 'Folder'
     }
 }, {

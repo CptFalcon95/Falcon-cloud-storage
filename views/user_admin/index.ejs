@@ -22,28 +22,51 @@
                             <i class="fas fa-download fa-sm text-white-50 "></i> Upload
                         </a>
                     </div>
-                    <div class="p-3">
- 
-                        <div class="row text-center text-lg-left d-flex">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col"><input type="checkbox"></th>
+                                <th scope="col">Filename</th>
+                                <th scope="col">Size</th>
+                                <th scope="col">Changed</th>
+                            </tr>
+                        </thead>
+                        <tbody>                            
                             <% for( let i = 0; i < fileData.length; i++ ) { %>
-                                <div class="col-lg-2 col-md-3 col-6">
-                                    <h2><%= fileData[i].type %></h2>
-                                    <% if (fileData[i].type == 'image') { %>
-                                        <a class="d-block mb-3 h-100" data-toggle="lightbox" href="#demoLightbox">
-                                            <h2><%= fileData[i]._id %></h2>
-                                            <img class="img-fluid img-thumbnail" src="/file/<%= fileData[i]._id %>" alt="">
-                                        </a>
-                                    <% } %>
-                                    <% if (fileData[i].type == 'compressed') { %>
-                                        <a class="d-block mb-3 h-100" data-toggle="lightbox" href="/file/<%= fileData[i]._id %>">
-                                            <h2><%= fileData[i]._id %></h2>
-                                            <img class="img-fluid img-thumbnail" src="images/zip.png" alt="">
-                                        </a>
-                                    <% } %>
-                                </div>
+                                <% 
+                                const fileDate = new Date(fileData[i].created);
+                                const now = new Date();
+                                const timeDiff = Math.abs(now.getTime() - fileDate.getTime());
+                                const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));    
+                                %> 
+                                <tr>                                
+                                    <th width="20px" scope="row"><input type="checkbox"></th>
+                                    <td>
+                                        <% if (fileData[i].type == 'image') { %>
+                                            <i class="fas fa-image"></i>
+                                            <a href="/file/<%= fileData[i]._id %> ">
+                                                <span class="text-white"><%= fileData[i].originalName %> </span>
+                                            </a>
+                                        <% } %>
+                                        <% if (fileData[i].type == 'compressed') { %>
+                                            <i class="fas fa-file-archive"></i>
+                                            <span class="text-white"><%= fileData[i].originalName %> </span>
+                                        <% } %>
+                                        <% if (fileData[i].type == 'document') { %>
+                                            <i class="fas fa-file"></i>
+                                            <span class="text-white"><%= fileData[i].originalName %> </span>
+                                        <% } %>
+                                    </td>
+                                    <td>
+                                        <span class="text-white"><%= Math.round(fileData[i].size / 1000) %> kB</span>
+                                    </td>
+                                    <td>
+                                        <span class="text-white"><%= diffDays - 1 %> day(s) ago</span>
+                                    </td>
+                                </tr>
                             <% } %>
-                        </div>
-                    </div>  
+                        </tbody>
+                    </table>
                 </section>
             </div>
         </div>
