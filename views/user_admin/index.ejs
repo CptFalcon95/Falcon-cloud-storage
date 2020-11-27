@@ -25,10 +25,11 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th scope="col"><input type="checkbox"></th>
-                                <th scope="col">Filename</th>
-                                <th scope="col">Size</th>
-                                <th scope="col">Changed</th>
+                                <th scope="col" class="text-left"><input type="checkbox"></th>
+                                <th scope="col" class="text-left">Filename</th>
+                                <th scope="col" class="text-center">Share</th>
+                                <th scope="col" class="text-center">Size</th>
+                                <th scope="col" class="text-center">Changed</th>
                             </tr>
                         </thead>
                         <tbody>                            
@@ -41,7 +42,7 @@
                                 %> 
                                 <tr>                                
                                     <th width="20px" scope="row"><input type="checkbox"></th>
-                                    <td>
+                                    <td class="text-left">
                                         <% if (fileData[i].type == 'image') { %>
                                             <i class="fas fa-image"></i>
                                             <a href="/file/<%= fileData[i]._id %> ">
@@ -57,10 +58,13 @@
                                             <span class="text-white"><%= fileData[i].originalName %> </span>
                                         <% } %>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
+                                        <i class="fas fa-fw fa-share-alt"></i>
+                                    </td>
+                                    <td class="text-center">
                                         <span class="text-white"><%= Math.round(fileData[i].size / 1000) %> kB</span>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <span class="text-white"><%= diffDays - 1 %> day(s) ago</span>
                                     </td>
                                 </tr>
