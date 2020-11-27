@@ -28,6 +28,7 @@ const upload = multer({
 });
 
 router.get('/', auth.checkLogin, userController.index);
+router.get('/pictures', auth.checkLogin, userController.gallery);
 router.get('/logout', auth.checkLogin, userController.logout);
 router.post('/upload', auth.checkLogin, upload.array('files[]', 8), fsConstroller.storeFiles)
 

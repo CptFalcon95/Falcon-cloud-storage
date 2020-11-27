@@ -140,13 +140,14 @@ function storeDataPromise(req, res, fileData) {
     });
 }
 
-function getUserFiles(id, folder) {
+function getUserFiles(options) {
     return new Promise((resolve, reject) => {
-        File.find({owner: id, folder: folder}, {sharedOwners: 0, name: 0, extension: 0, owner: 0}, (err, results) => {
+        File.find(options, {sharedOwners: 0, name: 0, extension: 0, owner: 0}, (err, results) => {
             if(err) {
                 console.log(err);
                 reject(err);
             } else {
+                console.log(results);
                 resolve(results);
             }
         });
@@ -165,7 +166,6 @@ function serveFile(req, res) {
         res.sendFile(`${appDir}/user_data/${file.owner}/${file.name + file.extension}`, file.originalName);
     });
 }
-
 
 module.exports = {
     createFolder,

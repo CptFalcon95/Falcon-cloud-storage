@@ -9,15 +9,37 @@ module.exports = {
     login,
     logout,
     register,
+    gallery,
 }
 
 // Render home page according to login status
 async function index(req, res) {
     let user = req.session.auth;
-    // const files = await fs.getUserFiles(user._id, null);
-    await fs.getUserFiles(user._id, null)
+    await fs.getUserFiles({
+        owner: user._id, 
+        folder: null
+    })
     .then(files => {
         res.render('user_admin/index', {
+            isAdmin: user.isAdmin,
+            userData: user,
+            fileData: files
+        });
+    })
+    .catch((err) => {
+        res.sendStatus(500);
+    });
+}
+
+async function gallery(req, res) {
+    let user = req.session.auth;
+    await fs.getUserFiles({
+        owner: user._id, 
+        folder: null,
+        type: "image"
+    })
+    .then(files => {
+        res.render('user_admin/pictures', {
             isAdmin: user.isAdmin,
             userData: user,
             fileData: files
