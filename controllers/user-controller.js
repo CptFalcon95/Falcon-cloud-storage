@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const User = require('../models/user-model');
 const mongoose = require('mongoose');
 const fs = require('./file-system-controller');
+const galleryController = require('./gallery-controller');
 
 module.exports = {
     index,
@@ -32,21 +33,12 @@ async function index(req, res) {
 }
 
 async function gallery(req, res) {
-    let user = req.session.auth;
-    await fs.getUserFiles({
-        owner: user._id, 
-        folder: null,
-        type: "image"
-    })
-    .then(files => {
-        res.render('user_admin/pictures', {
-            isAdmin: user.isAdmin,
-            userData: user,
-            fileData: files
-        });
-    })
-    .catch((err) => {
-        res.sendStatus(500);
+    const images = galleryController.getImages(req, res);
+    const user = req.session.auth
+    res.render('user_admin/pictures', {
+        isAdmin: user.isAdmin,
+        userData: user,
+        fileData: images
     });
 }
 
@@ -113,7 +105,6 @@ async function register(req, res) {
 function registerUserPromise(req, res, userData) {
     return new Promise((resolve, reject) => {
         const user = new User(userData);
-        console.log(user);
         user
         .save()
         .then((result) => {

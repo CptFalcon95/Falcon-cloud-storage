@@ -489,7 +489,6 @@ if (document.querySelector(".js-form-register")) {
   };
 
   var registerUser = function registerUser(form, values) {
-    console.log("registerUser");
     fetch(linkRegister, {
       headers: {
         "Content-Type": "application/json; charset=utf-8"
@@ -501,7 +500,6 @@ if (document.querySelector(".js-form-register")) {
     }) // parse response as JSON (can be res.text() for plain response)
     .then(function (response) {
       // TODO User needs to be notified on the frontend.
-      console.log(response);
       sessionStorage.setItem("registerSuccess", true);
       window.location.href = '/';
     })["catch"](function (err) {
@@ -542,8 +540,7 @@ if (document.querySelector("#uploadForm")) {
     fetch('user/upload', {
       method: 'POST',
       body: files
-    }).then(function (response) {
-      console.log(response);
+    }).then(function (response) {// console.log(response);
     })["catch"](function (err) {
       console.log("sorry, there went something wrong");
     });

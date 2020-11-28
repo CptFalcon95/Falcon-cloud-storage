@@ -56,7 +56,6 @@ if (document.querySelector(".js-form-register")) {
    }
 
    const registerUser = (form, values) => {
-      console.log("registerUser");
       fetch(linkRegister, { 
          headers: {"Content-Type": "application/json; charset=utf-8"},
          method: 'POST',
@@ -65,7 +64,6 @@ if (document.querySelector(".js-form-register")) {
       .then(res => res.json()) // parse response as JSON (can be res.text() for plain response)
       .then(response => {
          // TODO User needs to be notified on the frontend.
-         console.log(response);
          sessionStorage.setItem("registerSuccess", true);
          window.location.href = '/';
       })

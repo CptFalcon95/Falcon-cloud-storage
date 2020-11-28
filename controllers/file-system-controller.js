@@ -99,7 +99,7 @@ async function storeFiles(req, res) {
             const newFileName = crypto.randomBytes(32).toString('hex');
             const dest = `${userRoot}/${newFileName + fileExtension}`;
             const mimetype = files[x].mimetype;
-            console.log(files[x].size);
+
             if(checkFileType(mimetype).ok) {
                 const data = {
                     _id: mongoose.Types.ObjectId(),
@@ -142,12 +142,13 @@ function storeDataPromise(req, res, fileData) {
 
 function getUserFiles(options) {
     return new Promise((resolve, reject) => {
-        File.find(options, {sharedOwners: 0, name: 0, extension: 0, owner: 0}, (err, results) => {
+        // .sort({date: 'desc'})
+        const exclude = {sharedOwners: 0, name: 0, extension: 0, owner: 0}
+        File.find(options, exclude).sort({created: 'desc'}).exec((err, results) => {
             if(err) {
                 console.log(err);
                 reject(err);
             } else {
-                console.log(results);
                 resolve(results);
             }
         });
@@ -161,7 +162,6 @@ function serveDownload(req, res) {
 }
 
 function serveFile(req, res) {
-    console.log('image');
     File.findOne({_id: req.params.id}, {sharedOwners: 0}, (err, file) => {
         res.sendFile(`${appDir}/user_data/${file.owner}/${file.name + file.extension}`, file.originalName);
     });

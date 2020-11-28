@@ -5,6 +5,7 @@ const multer  = require('multer');
 const path  = require('path');
 
 const fsConstroller = require('../controllers/file-system-controller');
+const galleryController = require('../controllers/gallery-controller');
 const auth = require('../middleware/auth-middleware');
 
 const appDir = path.dirname(require.main.filename);
@@ -30,6 +31,6 @@ const upload = multer({
 router.get('/', auth.checkLogin, userController.index);
 router.get('/pictures', auth.checkLogin, userController.gallery);
 router.get('/logout', auth.checkLogin, userController.logout);
-router.post('/upload', auth.checkLogin, upload.array('files[]', 8), fsConstroller.storeFiles)
+router.post('/upload', auth.checkLogin, upload.array('files[]', 8), fsConstroller.storeFiles);
 
 module.exports = router;

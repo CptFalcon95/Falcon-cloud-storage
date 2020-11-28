@@ -22,11 +22,11 @@
                             <i class="fas fa-download fa-sm text-white-50 "></i> Upload
                         </a>
                     </div>
-                    <div class="p-3">
+                    <div class="gallery p-3">
                         <div class="row text-center text-lg-left">
                           <% for( let i = 0; i < fileData.length; i++ ) { %>
-                            <div class="col-lg-3 col-md-4 col-6">
-                              <a class="d-block mb-4 h-100" data-toggle="lightbox" href="#demoLightbox">
+                            <div class="m-1">
+                              <a class="d-flex mb-4 h-100" data-toggle="lightbox" href="#demoLightbox">
                                 <img class="img-fluid img-thumbnail" src="/file/<%= fileData[i]._id %> " alt="">
                               </a>
                             </div>
