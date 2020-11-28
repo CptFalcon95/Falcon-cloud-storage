@@ -88,9 +88,9 @@ function createFolder(id, root, folderName) {
 async function storeFiles(req, res) {
     try {
         const id = req.session.auth._id;
-        const userRoot = `${appDir}/user_data/${id}`;
         const files = req.files;
-
+        const userRoot = `${appDir}/user_data/${id}`;
+        
         for (let x = 0; x < files.length; x++) {
             const originalFileName = files[x].originalname;
             const src = `${appDir}/tmp/${originalFileName}`;
@@ -142,7 +142,6 @@ function storeDataPromise(req, res, fileData) {
 
 function getUserFiles(options) {
     return new Promise((resolve, reject) => {
-        // .sort({date: 'desc'})
         const exclude = {sharedOwners: 0, name: 0, extension: 0, owner: 0}
         File.find(options, exclude).sort({created: 'desc'}).exec((err, results) => {
             if(err) {
