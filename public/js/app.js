@@ -540,7 +540,8 @@ if (document.querySelector("#uploadForm")) {
     fetch('user/upload', {
       method: 'POST',
       body: files
-    }).then(function (response) {// console.log(response);
+    }).then(function (response) {
+      console.log(response);
     })["catch"](function (err) {
       console.log("sorry, there went something wrong");
     });

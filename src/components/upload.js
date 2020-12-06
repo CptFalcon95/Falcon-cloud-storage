@@ -17,7 +17,7 @@ if (document.querySelector("#uploadForm")) {
          body: files
       })
       .then(response => {
-         // console.log(response);
+         console.log(response);
       })
       .catch(err => {
          console.log("sorry, there went something wrong");

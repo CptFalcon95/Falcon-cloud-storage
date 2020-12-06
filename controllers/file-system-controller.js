@@ -86,13 +86,13 @@ function createFolder(id, root, folderName) {
 // Delete file
 
 async function storeFiles(req, res) {
+    console.log(appDir);
+    
     try {
         const id = req.session.auth._id;
         const files = req.files;
         const userRoot = `${appDir}/user_data/${id}`;
 
-        console.log(appDir);
-        
         for (let x = 0; x < files.length; x++) {
             const originalFileName = files[x].originalname;
             const tmpSrc = `${appDir}/tmp/${originalFileName}`;
