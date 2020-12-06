@@ -14,9 +14,9 @@ module.exports = {
 }
 
 // Render home page according to login status
-async function index(req, res) {
+function index(req, res) {
     let user = req.session.auth;
-    await fs.getUserFiles({
+    fs.getUserFiles({
         owner: user._id, 
         folder: null
     })
@@ -32,14 +32,18 @@ async function index(req, res) {
     });
 }
 
-async function gallery(req, res) {
-    const images = galleryController.getImages(req, res);
-    const user = req.session.auth
-    res.render('user_admin/pictures', {
-        isAdmin: user.isAdmin,
-        userData: user,
-        fileData: images
-    });
+function gallery(req, res) {
+    galleryController.getImages(req, res)
+    .then(results => {
+        res.render('user_admin/pictures', {
+            userData: req.session.auth,
+            imageCols: results
+        });
+    })
+    .catch(err => {
+        console.log(err);
+        res.send(503);
+    })
 }
 
 function login(req, res) {

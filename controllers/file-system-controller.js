@@ -93,21 +93,23 @@ async function storeFiles(req, res) {
         
         for (let x = 0; x < files.length; x++) {
             const originalFileName = files[x].originalname;
-            const src = `${appDir}/tmp/${originalFileName}`;
-            const fileExtension = path.extname(src);
+            const tmpSrc = `${appDir}/tmp/${originalFileName}`;
+            const fileExtension = path.extname(tmpSrc);
     
             const newFileName = crypto.randomBytes(32).toString('hex');
             const dest = `${userRoot}/${newFileName + fileExtension}`;
             const mimetype = files[x].mimetype;
 
-            if(checkFileType(mimetype).ok) {
+            const checkMimetype = checkFileType(mimetype);
+
+            if(checkMimetype.ok) {
                 const data = {
                     _id: mongoose.Types.ObjectId(),
                     name: newFileName,
                     originalName: originalFileName,
                     extension: fileExtension,
                     size: files[x].size,
-                    type: checkFileType(mimetype).file,
+                    type: checkMimetype.file,
                     favorited: false,
                     owner: id,
                     folder: null,
@@ -115,7 +117,7 @@ async function storeFiles(req, res) {
 
                 // Move files from tmp to user folder
                 if(await storeDataPromise(req, res, data)) {
-                    fs.renameSync(src, dest);
+                    fs.renameSync(tmpSrc, dest);
                 }
             }
         }

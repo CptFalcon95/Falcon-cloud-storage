@@ -1,0 +1,11 @@
+<div class="row gallery-columns">
+    <% for( let i = 0; i <= 3; i++ ) { %>
+        <div class="column">
+            <% imageCols[i].forEach(element => { %>
+                <a href="">
+                    <img src="/file/<%= element._id %>" alt="">
+                </a>
+            <% }) %>
+        </div>
+    <% } %>
+</div>
