@@ -8,8 +8,7 @@ module.exports = {
 };
 
 function checkLogin(req, res, next) {
-    if (req.session.auth != undefined)
-    {
+    if (req.session.auth != undefined) {
         if (req.session.auth || req.path==='/') {
             next();
         } else {
@@ -50,14 +49,3 @@ function checkAccess(req, res, next) {
         res.sendStatus(404);
     }
 }
-
-// function checkAdmin(req, res, next) {
-//     if (req.session != undefined)
-//     {
-//         if (req.session.auth || req.path==='/') {
-//      next();
-//         } else {
-//            res.redirect("/");
-//         }
-//     }
-// }
