@@ -10,9 +10,11 @@ This project is primarily just me playing around with nodeJS and to build my por
 
 ## Installation
 
-* After cloning the repo run `npm install` in the root directory create a `.env` file in the root directory
+* After cloning the repo run `npm install` 
 
-* Create two folders in the root called: `tmp` and `user_data`
+* In the root directory create a `.env` file, or rename the `.env-example` file
+
+* Create two folders in the root called `tmp` and `user_data`
 
 * Set in the `.env` file the MongoDB connection URL
     
@@ -30,7 +32,7 @@ This project is primarily just me playing around with nodeJS and to build my por
 
 * If SSL is enabled in your environment, add the following to the `.env` file
 
-    `SSL_ENABLED={true}`
+    `SSL_ENABLED={BOOLEAN}`
     
 ## Users
 A user is a `Guest` when not logged in. A logged in user is either a `User` or a `Admin`
