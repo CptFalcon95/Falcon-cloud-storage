@@ -5,7 +5,7 @@ This project is primarily just me playing around with nodeJS and to build my por
 
 ## About
 
-* Falcon Cloud Storage is a simple cloud storage service build on Node.js using Express.js and MongoDB.
+* Falcon Cloud Storage is a simple cloud storage service build on Node.js using Express.js and MongoDB
 * Project status: Development
 
 ## Installation
@@ -14,13 +14,13 @@ This project is primarily just me playing around with nodeJS and to build my por
 
 * Create two folders in the root called: `tmp` and `user_data`
 
-* Set in the .env file the MongoDB connection URL
+* Set in the `.env` file the MongoDB connection URL
     
     `DATABASE_URL={YOUR_MONGODB_URL}`
 
-    Currently only tested with MongoDB Atlas clusters. Create the database [here](https://cloud.mongodb.com).
+    Currently only tested with MongoDB Atlas clusters. Create the database [here](https://cloud.mongodb.com)
 
-* Provide a random string which will be the session secret
+* Set a random string which will be the session secret, on a new line within the `.env` file
 
     `SESSION_SECRET={RANDOM_STRING}`
 
@@ -33,8 +33,8 @@ This project is primarily just me playing around with nodeJS and to build my por
     `SSL_ENABLED={true}`
     
 ## Users
-A user is a `Guest` when not logged in. A logged in user is either a `User` or a `Admin`.
-There are no other levels of authority yet.
+A user is a `Guest` when not logged in. A logged in user is either a `User` or a `Admin`
+There are no other levels of authority yet
 
 ## Features
 - User features: 
@@ -58,7 +58,7 @@ There are no other levels of authority yet.
 * For development purposes the npm packages `gulp-cli` and `nodemon` are required, and should install with the rest
 
 ## Limitations
-Supported file extensions for upload will be: png, jpg, jpeg, docx, doc, avi, mp4, mp3, odt, ods, odp, ppt, pptx, zip, tar, xls, xlsx, 7z, wav, md.
+Supported file extensions for upload will be: png, jpg, jpeg, docx, doc, avi, mp4, mp3, odt, ods, odp, ppt, pptx, zip, tar, xls, xlsx, 7z, wav
 
 ## Start
 
