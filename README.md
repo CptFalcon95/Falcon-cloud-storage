@@ -10,20 +10,27 @@ This project is primarily just me playing around with nodeJS and to build my por
 
 ## Installation
 
-* After cloning the repo run `npm install` in the root directory
-* Create a `.env` file in the root directory. Within the file paste the following to allow a database to be connected
+* After cloning the repo run `npm install` in the root directory create a `.env` file in the root directory
+
+* Create two folders in the root called: `tmp` and `user_data`
+
+* Set in the .env file the MongoDB connection URL
     
-    `DATABASE_URL=YOUR_MONGODB_URL`
+    `DATABASE_URL={YOUR_MONGODB_URL}`
 
     Currently only tested with MongoDB Atlas clusters. Create the database [here](https://cloud.mongodb.com).
 
+* Provide a random string which will be the session secret
+
+    `SESSION_SECRET={RANDOM_STRING}`
+
 * To change the default port add a new line in the `.env` file
 
-    `PORT=XXXX`
+    `PORT={XXXX}`
 
 * If SSL is enabled in your environment, add the following to the `.env` file
 
-    `SSL_ENABLED=true`
+    `SSL_ENABLED={true}`
     
 ## Users
 A user is a `Guest` when not logged in. A logged in user is either a `User` or a `Admin`.
